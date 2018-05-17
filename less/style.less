@@ -4,10 +4,22 @@
 @import "color-palette.less";
 @import "core.less";
 
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
+@font-face {
+    font-family: LatoRegular;
+    src: url(../webfonts/Lato-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
 
 html, body {
     background-color: #313131;
     color: #FAFAFA;
+    font-family: 'LatoRegular', sans-serif;
 }
 
