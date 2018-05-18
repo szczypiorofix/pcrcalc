@@ -1,7 +1,7 @@
 {
 "name": "PCR Kalculator",
 "short_name": "PCRCalc",
-"start_url": "/",
+"start_url": "/pcrcalc/",
 "display": "standalone",
 "background_color": "#669900",
 "theme_color": "#669900",

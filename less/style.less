@@ -1,7 +1,7 @@
 @charset 'UTF-8';
 
 @import "normalize.min.less";
-@import "color-palette.less";
+@import "flatcolors.less";
 @import "core.less";
 
 * {
@@ -18,8 +18,89 @@
 }
 
 html, body {
-    background-color: #313131;
-    color: #FAFAFA;
+    background-color: @peterriver;
+    color: @clouds;
     font-family: 'LatoRegular', sans-serif;
 }
 
+.maindiv {
+    padding: 10px;
+
+    .title {
+        margin: 10px 25px;
+        text-align: center;
+    }
+
+    .container {
+        
+        .gridBox();
+        grid-template-columns: min-content;
+        grid-template-rows: auto auto;
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+        justify-items: center;
+        align-items: stretch;
+
+        table {
+            //border: 2px solid @peterriver;
+            width: 100%;
+            background-color: @wisteria;
+            padding: 25px;
+            font-size: 18px;
+            .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
+            .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
+            .diff {
+                color: @orange;
+            }
+            // tr {
+            //     .flexBox();
+            //     flex-direction: row;
+            //     justify-content: space-between;
+            // }
+            tr > td {
+                padding-bottom: 10px;
+                min-width: 120px;
+                input {
+                    max-width: 100%;
+                    width: 100%;
+                    outline: none;
+                    border: 1px solid @wisteria;
+                    border-radius: 2px;
+                    height: 28px;
+                    padding: 3px;
+                    .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.4));
+                    &:focus, &:active {
+                        .boxShadow(1px, 1px, 12px, 0, rgba(10, 10, 10, 0.7));
+                    }
+                }
+            }
+        }
+    }
+
+
+    .button-save-offline {
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        padding: 10px 25px;
+        background-color: @pumpkin;
+        border: none;
+        width: 50px;
+        height: 50px;
+        color: @clouds;
+        font-size: 32px;
+        .borderRadius(50%);
+        .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
+        .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
+        i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        &:hover {
+            cursor: pointer;
+            .boxShadow(1px, 1px, 12px, 0, rgba(10, 10, 10, 0.75));
+        }
+    }
+}
