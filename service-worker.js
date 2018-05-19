@@ -6,7 +6,7 @@ var cacheName = 'PCR-calc.v-1.00.000';
 var filesToCache = [
     '/',
     'index.html',
-    'help.html',
+    'help.json',
     
     'js/app.js',
     'js/script.js',
@@ -15,6 +15,9 @@ var filesToCache = [
     'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
     
     'webfonts/Lato-Regular.ttf',
+
+    'manifest.json',
+    'browserconfig.xml',
 
     'icons/android-icon-36x36.png',
     'icons/android-icon-48x48.png',

@@ -1,0 +1,17 @@
+{
+  "cache" : [
+    "/",
+    "index.html",
+    "help.html",
+    
+    "js/app.js",
+    "js/script.js",
+    
+    "css/style.css",
+    
+    "webfonts/Lato-Regular.ttf",
+
+    "manifest.json",
+    "browserconfig.xml"
+  ]
+}
