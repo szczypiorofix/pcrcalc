@@ -1,15 +1,17 @@
 @charset 'UTF-8';
 
 @import "normalize.min.less";
-// @import "flatcolors.less";
+@import "palette.less";
 @import "core.less";
 
-@darkPrimaryColor: #303F9F;
-@textColor: #FFFFFF;
-@secondaryText: #757575;
-@lightPrimaryColor: #C5CAE9;
-@accentColor: #FF4081;
-@dividerColor: #BDBDBD;
+// @darkPrimaryColor: @gray800;
+// @primaryColor: @gray700;
+// @lightPrimaryColor: #C5CAE9;
+// @textColor: #FFFFFF;
+// @secondaryText: #757575;
+
+// @accentColor: #FF4081;
+// @dividerColor: #BDBDBD;
 
 * {
     -webkit-box-sizing: border-box;
@@ -25,24 +27,24 @@
 }
 
 html, body {
-    background-color: @darkPrimaryColor;
-    color: @textColor;
+    background-color: @primaryColor;
+    color: @textPrimaryColor;
     font-family: 'LatoRegular', sans-serif;
     width: 100%;
     height: 100%;
 }
 
 .maindiv {
-    padding: 10px;
     max-width: 400px;
     margin: 0 auto;
     .title {
-        margin: 10px 25px;
+        padding: 15px 0;
         text-align: center;
+        background-color: @darkPrimaryColor;
     }
 
     .container {
-        
+        padding: 15px 5px;
         .gridBox();
         grid-template-columns: min-content;
         grid-template-rows: auto auto;
@@ -53,14 +55,15 @@ html, body {
 
         table {
             width: 100%;
-            background-color: #3F51B5;
+            background-color: @textPrimaryColor;
+            color: @primaryTextColor;
             padding: 10px;
             border-spacing:0;
             font-size: 18px;
             .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
             .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
             .diff {
-                color: @accentColor;
+                color: @secondaryTextColor;
             }            
             tr > td {
                 padding: 5px 10px;
@@ -68,7 +71,7 @@ html, body {
                 input {
                     width: 100%;
                     outline: none;
-                    border: 1px solid @accentColor;
+                    border: 1px solid @dividerColor;
                     border-radius: 2px;
                     height: 28px;
                     padding: 3px;
@@ -81,7 +84,6 @@ html, body {
         }
     }
 
-
     .button-save-offline {
         position: fixed;
         right: 10px;
@@ -91,7 +93,7 @@ html, body {
         border: none;
         width: 50px;
         height: 50px;
-        color: @textColor;
+        color: @textPrimaryColor;
         font-size: 32px;
         .borderRadius(50%);
         .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
