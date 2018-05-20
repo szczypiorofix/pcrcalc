@@ -14,7 +14,7 @@
    viewBox="0 0 744.09448819 1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    sodipodi:docname="favicon.svg"
    inkscape:export-filename="C:\xampp\htdocs\pcrcalc\icons\favicon.png"
    inkscape:export-xdpi="115"
@@ -62,13 +62,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.495"
-     inkscape:cx="-272.02682"
-     inkscape:cy="575.40724"
+     inkscape:cx="498.68025"
+     inkscape:cy="656.21532"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="962"
+     inkscape:window-width="1600"
+     inkscape:window-height="838"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
@@ -89,7 +89,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="opacity:1;fill:#669900;fill-opacity:1;fill-rule:nonzero;stroke:#404040;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#303f9f;fill-opacity:1;fill-rule:nonzero;stroke:#c5cae9;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4138"
        width="376.48605"
        height="376.48605"
@@ -98,15 +98,15 @@
        ry="17.141983" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:180px;line-height:125%;font-family:Nasalization;-inkscape-font-specification:'Nasalization, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4264)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Nasalization;-inkscape-font-specification:'Nasalization, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#c5cae9;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4264);"
        x="259.98669"
        y="586.25433"
        id="text4140"
-       sodipodi:linespacing="125%"
        transform="matrix(1.3030272,0,0,1.3030272,-112.74042,-159.44717)"><tspan
          sodipodi:role="line"
          id="tspan4142"
          x="259.98669"
-         y="586.25433">PC</tspan></text>
+         y="586.25433"
+         style="font-size:180px;line-height:1.25;fill:#c5cae9;fill-opacity:1;">PC</tspan></text>
   </g>
 </svg>

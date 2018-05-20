@@ -1,8 +1,15 @@
 @charset 'UTF-8';
 
 @import "normalize.min.less";
-@import "flatcolors.less";
+// @import "flatcolors.less";
 @import "core.less";
+
+@darkPrimaryColor: #303F9F;
+@textColor: #FFFFFF;
+@secondaryText: #757575;
+@lightPrimaryColor: #C5CAE9;
+@accentColor: #FF4081;
+@dividerColor: #BDBDBD;
 
 * {
     -webkit-box-sizing: border-box;
@@ -18,8 +25,8 @@
 }
 
 html, body {
-    background-color: @peterriver;
-    color: @clouds;
+    background-color: @darkPrimaryColor;
+    color: @textColor;
     font-family: 'LatoRegular', sans-serif;
     width: 100%;
     height: 100%;
@@ -39,35 +46,29 @@ html, body {
         .gridBox();
         grid-template-columns: min-content;
         grid-template-rows: auto auto;
-        grid-row-gap: 10px;
-        grid-column-gap: 10px;
+        grid-row-gap: 15px;
+        grid-column-gap: 15px;
         justify-items: center;
         align-items: stretch;
 
         table {
-            //border: 2px solid @peterriver;
             width: 100%;
-            background-color: @wisteria;
-            padding: 15px;
+            background-color: #3F51B5;
+            padding: 10px;
+            border-spacing:0;
             font-size: 18px;
             .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
             .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
             .diff {
-                color: @orange;
-            }
-            // tr {
-            //     .flexBox();
-            //     flex-direction: row;
-            //     justify-content: space-between;
-            // }
+                color: @accentColor;
+            }            
             tr > td {
-                padding-bottom: 10px;
-                min-width: 110px;
+                padding: 5px 10px;
+                min-width: 115px;
                 input {
-                    max-width: 100%;
                     width: 100%;
                     outline: none;
-                    border: 1px solid @wisteria;
+                    border: 1px solid @accentColor;
                     border-radius: 2px;
                     height: 28px;
                     padding: 3px;
@@ -86,11 +87,11 @@ html, body {
         right: 10px;
         bottom: 10px;
         padding: 10px 25px;
-        background-color: @pumpkin;
+        background-color: @accentColor;
         border: none;
         width: 50px;
         height: 50px;
-        color: @clouds;
+        color: @textColor;
         font-size: 32px;
         .borderRadius(50%);
         .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
@@ -104,6 +105,23 @@ html, body {
         &:hover {
             cursor: pointer;
             .boxShadow(1px, 1px, 12px, 0, rgba(10, 10, 10, 0.75));
+        }
+    }
+}
+
+
+/** MEDIA QUERIES */
+
+// Tablet
+@media only screen and (min-width: 650px) {
+    .maindiv {
+        max-width: 100%;
+        .container {
+            grid-template-columns: auto auto;
+            grid-template-rows: auto;
+            table {
+                max-width: 650px;
+            }
         }
     }
 }
