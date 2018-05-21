@@ -33,6 +33,7 @@ class PCRCalc {
     constructor() {
         this.inputFields = {};
         this.resultFields = {};
+        this.dataForStorage = {};
         this.inputFields = {
             inputMaxVolume: document.getElementById('inputMaxVolume'),
             inputH2O: document.getElementById('inputH2O'),
@@ -71,6 +72,15 @@ class PCRCalc {
             outputDNA: document.getElementById('outputDNA')
         };
     }
+    calcFieldForOne(i) {
+        return (parseFloat(this.inputFields['outputMaxVolume'].value) *
+            (parseFloat(this.inputFields[i].value) /
+                parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
+    }
+    calcFieldForMax(i) {
+        return (parseFloat(this.resultFields[i].innerHTML) *
+            parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+    }
     recalc() {
         let res = parseFloat(this.inputFields['inputH2O'].value)
             + parseFloat(this.inputFields['inputBuffer'].value)
@@ -84,35 +94,34 @@ class PCRCalc {
         // DIFFERENCE
         this.resultFields['inputDifferenceValue'].innerHTML = (parseFloat(this.inputFields['inputMaxVolume'].value) - res).toFixed(2);
         // H20
-        this.resultFields['outputH2O'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputH2O'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputH2OMax'].innerHTML = (parseFloat(this.resultFields['outputH2O'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputH2O'].innerHTML = this.calcFieldForOne('inputH2O');
+        this.resultFields['outputH2OMax'].innerHTML = this.calcFieldForMax('outputH2O');
         // Buffer
-        this.resultFields['outputBuffer'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputBuffer'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputBufferMax'].innerHTML = (parseFloat(this.resultFields['outputBuffer'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputBuffer'].innerHTML = this.calcFieldForOne('inputBuffer');
+        this.resultFields['outputBufferMax'].innerHTML = this.calcFieldForMax('outputBuffer');
         // Emhancer
-        this.resultFields['outputEnhancer'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputEnhancer'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputEnhancerMax'].innerHTML = (parseFloat(this.resultFields['outputEnhancer'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputEnhancer'].innerHTML = this.calcFieldForOne('inputEnhancer');
+        this.resultFields['outputEnhancerMax'].innerHTML = this.calcFieldForMax('outputEnhancer');
         // MgCl2
-        this.resultFields['outputMgCl2'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputMgCl2'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputMgCl2Max'].innerHTML = (parseFloat(this.resultFields['outputMgCl2'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputMgCl2'].innerHTML = this.calcFieldForOne('inputMgCl2');
+        this.resultFields['outputMgCl2Max'].innerHTML = this.calcFieldForMax('outputMgCl2');
         // Primer 1
-        this.resultFields['outputPrimer1'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputPrimer1'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputPrimer1Max'].innerHTML = (parseFloat(this.resultFields['outputPrimer1'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputPrimer1'].innerHTML = this.calcFieldForOne('inputPrimer1');
+        this.resultFields['outputPrimer1Max'].innerHTML = this.calcFieldForMax('outputPrimer1');
         // Primer 2
-        this.resultFields['outputPrimer2'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputPrimer2'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputPrimer2Max'].innerHTML = (parseFloat(this.resultFields['outputPrimer2'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputPrimer2'].innerHTML = this.calcFieldForOne('inputPrimer2');
+        this.resultFields['outputPrimer2Max'].innerHTML = this.calcFieldForMax('outputPrimer2');
         // dNTPs 
-        this.resultFields['outputDNTPs'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputDNTPs'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputDNTPsMax'].innerHTML = (parseFloat(this.resultFields['outputDNTPs'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputDNTPs'].innerHTML = this.calcFieldForOne('inputDNTPs');
+        this.resultFields['outputDNTPsMax'].innerHTML = this.calcFieldForMax('outputDNTPs');
         // Polymerase 
-        this.resultFields['outputPolymerase'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputPolymerase'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
-        this.resultFields['outputPolymeraseMax'].innerHTML = (parseFloat(this.resultFields['outputPolymerase'].innerHTML) * parseFloat(this.inputFields['numberOfProbes'].value)).toFixed(2);
+        this.resultFields['outputPolymerase'].innerHTML = this.calcFieldForOne('inputPolymerase');
+        this.resultFields['outputPolymeraseMax'].innerHTML = this.calcFieldForMax('outputPolymerase');
         // DNA
-        this.resultFields['outputDNA'].innerHTML = (parseFloat(this.inputFields['outputMaxVolume'].value) * (parseFloat(this.inputFields['inputDNA'].value) / parseFloat(this.inputFields['inputMaxVolume'].value))).toFixed(2);
+        this.resultFields['outputDNA'].innerHTML = this.calcFieldForOne('inputDNA');
+        this.dataForStorage['fields'] = {};
     }
     init() {
-        //console.log(this.inputFields);
-        //console.log(this.resultFields);
         this.recalc();
         var self = this;
         for (var property in this.inputFields) {

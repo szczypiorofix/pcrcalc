@@ -50,123 +50,130 @@
             <h1>PCR Master mix kalkulator</h1>
         </div>
             <div class="container">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="diff">Objętość wejściowa</td>
-                            <td><input type="number" id="inputMaxVolume" value="25"></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Odczynnik</strong></td>
-                            <td><strong>Jedna próba</strong></td>
-                        </tr>
-                        <tr>
-                            <td>H2O</td>
-                            <td><input type="number" id="inputH2O" value="14.7"></td>
-                        </tr>
-                        <tr>
-                            <td>10 x Bufor</td>
-                            <td><input type="number" id="inputBuffer" value="1.75"></td>
-                        </tr>
-                        <tr>
-                            <td>Enhancer 5x</td>
-                            <td><input type="number" id="inputEnhancer" value="1.75"></td>
-                        </tr>
-                        <tr>
-                            <td>MgCl2</td>
-                            <td><input type="number" id="inputMgCl2" value="2.5"></td>
-                        </tr>
-                        <tr>
-                            <td>Starter 1 (5 mM)</td>
-                            <td><input type="number" id="inputPrimer1" value="0.5"></td>
-                        </tr>
-                        <tr>
-                            <td>Starter 2 (5 mM)</td>
-                            <td><input type="number" id="inputPrimer2" value="0.5"></td>
-                        </tr>
-                        <tr>
-                            <td>dNTPs</td>
-                            <td><input type="number" id="inputDNTPs" value="0.4"></td>
-                        </tr>
-                        <tr>
-                            <td>polimeraza <i>Taq</i> 5u</td>
-                            <td><input type="number" id="inputPolymerase" value="0.4"></td>
-                        </tr>
-                        <tr>
-                            <td>DNA</td>
-                            <td><input type="number" id="inputDNA" value="2.5"></td>
-                        </tr>
-                        <tr>
-                            <td><span id="inputDifferenceText">OK</span></td>
-                            <td>Różnica: <span id="inputDifferenceValue">0</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="left-side">
+                    <div class="inputVolume">
+                        <span class="diff">Objętość wejściowa:</span>
+                        <input type="number" id="inputMaxVolume" value="25">
+                    </div>      
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><strong>Odczynnik</strong></th>
+                                <th><strong>Jedna próba</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>H2O</td>
+                                <td><input type="number" id="inputH2O" value="14.7"></td>
+                            </tr>
+                            <tr>
+                                <td>10 x Bufor</td>
+                                <td><input type="number" id="inputBuffer" value="1.75"></td>
+                            </tr>
+                            <tr>
+                                <td>Enhancer 5x</td>
+                                <td><input type="number" id="inputEnhancer" value="1.75"></td>
+                            </tr>
+                            <tr>
+                                <td>MgCl2</td>
+                                <td><input type="number" id="inputMgCl2" value="2.5"></td>
+                            </tr>
+                            <tr>
+                                <td>Starter 1 (5 mM)</td>
+                                <td><input type="number" id="inputPrimer1" value="0.5"></td>
+                            </tr>
+                            <tr>
+                                <td>Starter 2 (5 mM)</td>
+                                <td><input type="number" id="inputPrimer2" value="0.5"></td>
+                            </tr>
+                            <tr>
+                                <td>dNTPs</td>
+                                <td><input type="number" id="inputDNTPs" value="0.4"></td>
+                            </tr>
+                            <tr>
+                                <td>polimeraza <i>Taq</i> 5u</td>
+                                <td><input type="number" id="inputPolymerase" value="0.4"></td>
+                            </tr>
+                            <tr>
+                                <td>DNA</td>
+                                <td><input type="number" id="inputDNA" value="2.5"></td>
+                            </tr>
+                            <tr>
+                                <td><span id="inputDifferenceText">OK</span></td>
+                                <td>Różnica: <span id="inputDifferenceValue">0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="diff">Objętość wyjściowa</td>
-                            <td><input type="number" id="outputMaxVolume" value="25"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Odczynnik</strong></td>
-                            <td><strong>Jedna próba</strong></td>
-                            <td><strong>Liczba prób</strong></td>
-                        </tr>
-                        <tr>
-                            <td>PCR Mix</td>
-                            <td>1</td>
-                            <td><input type="number" id="numberOfProbes" value="16"></td>
-                        </tr>
-                        <tr>
-                            <td>H2O</td>
-                            <td><span id="outputH2O">0</span></td>
-                            <td><span id="outputH2OMax">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>10 x Bufor</td>
-                            <td><span id="outputBuffer">0</span></td>
-                            <td><span id="outputBufferMax">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>Enhancer 5x</td>
-                            <td><span id="outputEnhancer">0</span></td>
-                            <td><span id="outputEnhancerMax">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>MgCl2</td>
-                            <td><span id="outputMgCl2">0</span></td>
-                            <td><span id="outputMgCl2Max">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>Starter 1 (5 mM)</td>
-                            <td><span id="outputPrimer1">0</span></td>
-                            <td><span id="outputPrimer1Max">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>Starter 2 (5 mM)</td>
-                            <td><span id="outputPrimer2">0</span></td>
-                            <td><span id="outputPrimer2Max">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>dNTPs</td>
-                            <td><span id="outputDNTPs">0</span></td>
-                            <td><span id="outputDNTPsMax">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>polimeraza <i>Taq</i> 5u</td>
-                            <td><span id="outputPolymerase">0</span></td>
-                            <td><span id="outputPolymeraseMax">0</span></td>
-                        </tr>
-                        <tr>
-                            <td>DNA</td>
-                            <td><span id="outputDNA">0</span></td>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="right-side">
+                    <div class="outputVolume">
+                        <span class="diff">Objętość wyjściowa:</span>
+                        <input type="number" id="outputMaxVolume" value="25">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><strong>Odczynnik</strong></th>
+                                <th><strong>Jedna próba</strong></th>
+                                <th><strong>Liczba prób</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PCR Mix</td>
+                                <td>1</td>
+                                <td><input type="number" id="numberOfProbes" value="16"></td>
+                            </tr>
+                            <tr>
+                                <td>H2O</td>
+                                <td><span id="outputH2O">0</span></td>
+                                <td><span id="outputH2OMax">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>10 x Bufor</td>
+                                <td><span id="outputBuffer">0</span></td>
+                                <td><span id="outputBufferMax">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Enhancer 5x</td>
+                                <td><span id="outputEnhancer">0</span></td>
+                                <td><span id="outputEnhancerMax">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>MgCl2</td>
+                                <td><span id="outputMgCl2">0</span></td>
+                                <td><span id="outputMgCl2Max">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Starter 1 (5 mM)</td>
+                                <td><span id="outputPrimer1">0</span></td>
+                                <td><span id="outputPrimer1Max">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Starter 2 (5 mM)</td>
+                                <td><span id="outputPrimer2">0</span></td>
+                                <td><span id="outputPrimer2Max">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>dNTPs</td>
+                                <td><span id="outputDNTPs">0</span></td>
+                                <td><span id="outputDNTPsMax">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>polimeraza <i>Taq</i> 5u</td>
+                                <td><span id="outputPolymerase">0</span></td>
+                                <td><span id="outputPolymeraseMax">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>DNA</td>
+                                <td><span id="outputDNA">0</span></td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
         </div>
         <button id="saveoffline" class="button-save-offline"><i class="fas fa-plus"></i></button>
     </div>    

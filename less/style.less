@@ -4,14 +4,8 @@
 @import "palette.less";
 @import "core.less";
 
-// @darkPrimaryColor: @gray800;
-// @primaryColor: @gray700;
-// @lightPrimaryColor: #C5CAE9;
-// @textColor: #FFFFFF;
-// @secondaryText: #757575;
+@import url('https://fonts.googleapis.com/css?family=Lato|Raleway:200');
 
-// @accentColor: #FF4081;
-// @dividerColor: #BDBDBD;
 
 * {
     -webkit-box-sizing: border-box;
@@ -19,67 +13,99 @@
     box-sizing: border-box;
 }
 
-@font-face {
-    font-family: LatoRegular;
-    src: url(../webfonts/Lato-Regular.ttf);
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 html, body {
-    background-color: @primaryColor;
     color: @textPrimaryColor;
-    font-family: 'LatoRegular', sans-serif;
+    font-family: 'Lato', sans-serif;
     width: 100%;
     height: 100%;
 }
 
+input[type=number] {
+    width: 100%;
+    min-height: 35px;
+    height: 35px;
+    max-height: 35px;
+    outline: none;
+    border: 1px solid @dividerColor;
+    border-radius: 2px;
+    font-size: 18px;
+    color: @secondaryTextColor;
+    padding: 3px 3px 3px 5px;
+    .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.4));
+    &:focus, &:active {
+        .boxShadow(1px, 1px, 12px, 0, rgba(10, 10, 10, 0.7));
+    }
+}
+
+.diff {
+    color: @secondaryTextColor;
+}
+
 .maindiv {
-    max-width: 400px;
-    margin: 0 auto;
     .title {
+        font-family: 'Raleway', sans-serif;
         padding: 15px 0;
         text-align: center;
         background-color: @darkPrimaryColor;
+        h1 {
+            font-size: 36px;
+            font-weight: 500;
+        }
     }
 
     .container {
-        padding: 15px 5px;
-        .gridBox();
-        grid-template-columns: min-content;
-        grid-template-rows: auto auto;
-        grid-row-gap: 15px;
-        grid-column-gap: 15px;
-        justify-items: center;
-        align-items: stretch;
-
         table {
-            width: 100%;
-            background-color: @textPrimaryColor;
+            table-layout: fixed;
+            width: 98%;
+            margin: 10px auto;
+            background-color: @lightPrimaryColor;
+            border-collapse: collapse;
             color: @primaryTextColor;
-            padding: 10px;
-            border-spacing:0;
+            font-weight: 500;
+            border-spacing: 0;
+            border: 1px solid @primaryColor;
             font-size: 18px;
             .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
             .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
-            .diff {
-                color: @secondaryTextColor;
-            }            
+            tr > th {
+                background-color: @primaryColor;
+                color: @textPrimaryColor;
+                height: 36px;
+            }
             tr > td {
-                padding: 5px 10px;
-                min-width: 115px;
-                input {
-                    width: 100%;
-                    outline: none;
-                    border: 1px solid @dividerColor;
-                    border-radius: 2px;
-                    height: 28px;
-                    padding: 3px;
-                    .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.4));
-                    &:focus, &:active {
-                        .boxShadow(1px, 1px, 12px, 0, rgba(10, 10, 10, 0.7));
-                    }
-                }
+                padding: 10px;
+            }
+        }
+        .inputVolume {
+            text-align: center;
+            width: 98%;
+            margin: 10px auto;
+            .flexBox();
+            flex-direction: row;
+            justify-content: space-around;
+            input {
+                width: 50%;
+                
+            }
+            span {
+                font-size: 22px;
+            }
+        }
+        .outputVolume {
+            text-align: center;
+            width: 98%;
+            margin: 10px auto;
+            margin-top: 30px;
+            .flexBox();
+            flex-direction: row;
+            justify-content: space-around;
+            input {
+                width: 50%;
+            }
+            span {
+                font-size: 22px;
             }
         }
     }
@@ -117,12 +143,18 @@ html, body {
 // Tablet
 @media only screen and (min-width: 650px) {
     .maindiv {
-        max-width: 100%;
         .container {
+            //width: 100%;
+            .gridBox();
             grid-template-columns: auto auto;
-            grid-template-rows: auto;
+            .inputVolume {
+                width: 75%;
+            }.outputVolume {
+                width: 75%;
+                margin-top: 10px;
+            }
             table {
-                max-width: 650px;
+                width: 75%;
             }
         }
     }

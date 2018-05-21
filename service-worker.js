@@ -7,14 +7,15 @@ var filesToCache = [
     '/',
     'index.html',
     'help.json',
-    
+
     'js/app.js',
     'js/script.js',
-    
+
     'css/style.css',
     'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
-    
-    'webfonts/Lato-Regular.ttf',
+
+    //'webfonts/Lato-Regular.ttf',
+    'https://fonts.googleapis.com/css?family=Lato|Raleway:200',
 
     'manifest.json',
     'browserconfig.xml',
@@ -44,19 +45,19 @@ var filesToCache = [
     'icons/ms-icon-144x144.png',
     'icons/ms-icon-150x150.png',
     'icons/ms-icon-310x310.png',
-  ];
+];
 
 self.addEventListener('activate', function(e) {
     console.log('[ServiceWorker] Activate');
     e.waitUntil(
-      caches.keys().then(function(keyList) {
+        caches.keys().then(function(keyList) {
         return Promise.all(keyList.map(function(key) {
-          if (key !== cacheName) {
-            console.log('[ServiceWorker] Removing old cache', key);
-            return caches.delete(key);
-          }
-        }));
-      })
+                if (key !== cacheName) {
+                    console.log('[ServiceWorker] Removing old cache', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
     );
     return self.clients.claim();
 });
@@ -64,28 +65,27 @@ self.addEventListener('activate', function(e) {
 self.addEventListener('fetch', function(e) {
     console.log('[ServiceWorker] Fetch', e.request.url);
     e.respondWith(
-      caches.open(cacheName).then(function(cache) {
+        caches.open(cacheName).then(function(cache) {
         return cache.match(e.request).then(function (response) {
-          return response || fetch(e.request).then(function(response) {
-            cache.put(e.request, response.clone());
-            return response;
-          });
+            return response || fetch(e.request).then(function(response) {
+                cache.put(e.request, response.clone());
+                return response;
+            });
         });
-      })
+        })
     );
 });
 
 self.addEventListener('install', function(e) {
-  console.log('[ServiceWorker] Install');
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('[ServiceWorker] Caching app shell');
-      // To jest konieczne
-      return cache.addAll(filesToCache);
-      
-      // To nie jest konieczne ale może być pobierane potem
-      //cache.addAll(filesToCache);
-    })
-  );
-});
+    console.log('[ServiceWorker] Install');
+    e.waitUntil(
+        caches.open(cacheName).then(function(cache) {
+        console.log('[ServiceWorker] Caching app shell');
+        // To jest konieczne
+        return cache.addAll(filesToCache);
 
+        // To nie jest konieczne ale może być pobierane potem
+        //cache.addAll(filesToCache);
+        })
+    );
+});
