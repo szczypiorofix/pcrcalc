@@ -15,13 +15,11 @@ document.getElementById("saveoffline").addEventListener('click', function(event)
     //         return response.json();
     //     }).then(function(urls) {
     //         console.log('Zapisywanie na potem...');
-    //         console.log(urls); // Zwraca to co w 'help.json'
+    //         console.log(urls); // Zwraca treści plików wpisane w 'help.json'
     //         cache.addAll(urls['cache']);
     //     });
     // });
 
-
     
-
 });
 

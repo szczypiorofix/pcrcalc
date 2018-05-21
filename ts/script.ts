@@ -1,39 +1,4 @@
 
-// var inputMaxVolume = document.getElementById('inputMaxVolume');
-// var inputH2O = document.getElementById('inputH2O');
-// var inputBuffer = document.getElementById('inputBuffer');
-// var inputEnhancer = document.getElementById('inputEnhancer');
-// var inputMgCl2 = document.getElementById('inputMgCl2');
-// var inputPrimer1 = document.getElementById('inputPrimer1');
-// var inputPrimer2 = document.getElementById('inputPrimer2');
-// var inputDNTPs = document.getElementById('inputDNTPs');
-// var inputPolymerase = document.getElementById('inputPolymerase');
-// var inputDNA = document.getElementById('inputDNA');
-// var outputMaxVolume = document.getElementById('outputMaxVolume');
-// var numberOfProbes = document.getElementById('numberOfProbes');
-
-
-// var inputDifferenceText = document.getElementById("inputDifferenceText");
-// var inputDifferenceValue = document.getElementById("inputDifferenceValue");
-// var outputH2O = document.getElementById('outputH2O');
-// var outputH2OMax = document.getElementById('outputH2OMax');
-// var outputBuffer = document.getElementById('outputBuffer');
-// var outputBufferMax = document.getElementById('outputBufferMax');
-// var outputEnhancer = document.getElementById('outputEnhancer');
-// var outputEnhancerMax = document.getElementById('outputEnhancerMax');
-// var outputMgCl2 = document.getElementById('outputMgCl2');
-// var outputMgCl2Max = document.getElementById('outputMgCl2Max');
-// var outputPrimer1 = document.getElementById('outputPrimer1');
-// var outputPrimer1Max = document.getElementById('outputPrimer1Max');
-// var outputPrimer2 = document.getElementById('outputPrimer2');
-// var outputPrimer2Max = document.getElementById('outputPrimer2Max');
-// var outputDNTPs = document.getElementById('outputDNTPs');
-// var outputDNTPsNax = document.getElementById('outputDNTPsNax');
-// var outputPolymerase = document.getElementById('outputPolymerase');
-// var outputPolymeraseMax = document.getElementById('outputPolymeraseMax');
-// var outputDNA = document.getElementById('outputDNA');
-
-
 class PCRCalc {
 
     private inputFields:object = {};
@@ -147,10 +112,50 @@ class PCRCalc {
         this.resultFields['outputDNA'].innerHTML = this.calcFieldForOne('inputDNA');
 
         
-        this.dataForStorage['fields'] = {
-            // TODO Dodawanie na bierząco ostatnich wartości pól - jako lastResults w localStorage
-            // TODO Dodawanie po kliknięciu w + do historii wyników (wartości pól, data oraz nazwa)
-        };
+        if (typeof(Storage) !== "undefined") {
+            // Code for localStorage/sessionStorage.
+            
+            this.dataForStorage['fields'] = {
+                // TODO Dodawanie na bierząco ostatnich wartości pól - jako lastResults w localStorage
+                // TODO Dodawanie po kliknięciu w + do historii wyników (wartości pól, data oraz nazwa)
+
+                'inputMaxVolume': this.inputFields['inputMaxVolume'].value,
+                'inputH2O': this.inputFields['inputH2O'].value,
+                'inputBuffer': this.inputFields['inputBuffer'].value,
+                'inputEnhancer': this.inputFields['inputEnhancer'].value,
+                'inputMgCl2': this.inputFields['inputMgCl2'].value,
+                'inputPrimer1': this.inputFields['inputPrimer1'].value,
+                'inputPrimer2': this.inputFields['inputPrimer2'].value,
+                'inputPolymerase': this.inputFields['inputPolymerase'].value,
+                'inputDNTPs': this.inputFields['inputDNTPs'].value,
+                'inputDNA': this.inputFields['inputDNA'].value,
+                'outputMaxVolume': this.inputFields['outputMaxVolume'].value,
+                'inputDifferenceValue': this.resultFields['inputDifferenceValue'].innerHTML,
+                'outputH2O': this.resultFields['outputH2O'].innerHTML,
+                'outputH2OMax': this.resultFields['outputH2OMax'].innerHTML,
+                'outputBuffer': this.resultFields['outputBuffer'].innerHTML,
+                'outputBufferMax': this.resultFields['outputBufferMax'].innerHTML,
+                'outputEnhancer': this.resultFields['outputEnhancer'].innerHTML,
+                'outputEnhancerMax': this.resultFields['outputEnhancerMax'].innerHTML,
+                'outputMgCl2': this.resultFields['outputMgCl2'].innerHTML,
+                'outputMgCl2Max': this.resultFields['outputMgCl2Max'].innerHTML,
+                'outputPrimer1': this.resultFields['outputPrimer1'].innerHTML,
+                'outputPrimer1Max': this.resultFields['outputPrimer1Max'].innerHTML,
+                'outputPrimer2': this.resultFields['outputPrimer2'].innerHTML,
+                'outputPrimer2Max': this.resultFields['outputPrimer2Max'].innerHTML,
+                'outputDNTPs': this.resultFields['outputDNTPs'].innerHTML,
+                'outputPolymerase': this.resultFields['outputPolymerase'].innerHTML,
+                'outputPolymeraseMax': this.resultFields['outputPolymeraseMax'].innerHTML,
+                'outputDNA': this.resultFields['outputDNA'].innerHTML
+                
+            };
+            localStorage.setItem("pcrCalcLatest", JSON.stringify(this.dataForStorage['fields']));
+        } else {
+            // Sorry! No Web Storage support..
+        }
+
+
+        
     }
 
     public init() {
