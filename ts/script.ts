@@ -46,20 +46,26 @@ class PCRCalc {
     }
 
     private calcFieldForOne(i) {
-        return (
+        let r = (
             parseFloat(this.inputFields['outputMaxVolume'].value) *
             (
                 parseFloat(this.inputFields[i].value) /
                 parseFloat(this.inputFields['inputMaxVolume'].value)
             )
         ).toFixed(2);
+        if (Number.isNaN(parseFloat(r)))
+            return 0;
+        else return r;
     }
 
     private calcFieldForMax(i) {
-        return (
+        let r = (
             parseFloat(this.resultFields[i].innerHTML) *
             parseFloat(this.inputFields['numberOfProbes'].value)
         ).toFixed(2);
+        if (Number.isNaN(parseFloat(r)))
+            return 0;
+        else return r;
     }
 
     private recalc() {
@@ -73,8 +79,13 @@ class PCRCalc {
             + parseFloat(this.inputFields['inputDNTPs'].value)
             + parseFloat(this.inputFields['inputDNA'].value);
         
+
+        let resAll = parseFloat(this.inputFields['inputMaxVolume'].value) - res;
+        if (Number.isNaN(resAll)) {
+            resAll = 0;
+        }
         // DIFFERENCE
-        this.resultFields['inputDifferenceValue'].innerHTML = (parseFloat(this.inputFields['inputMaxVolume'].value) - res).toFixed(2);
+        this.resultFields['inputDifferenceValue'].innerHTML = resAll.toFixed(2);
         
         // H20
         this.resultFields['outputH2O'].innerHTML = this.calcFieldForOne('inputH2O');
@@ -149,7 +160,7 @@ class PCRCalc {
                 'outputDNA': this.resultFields['outputDNA'].innerHTML
                 
             };
-            localStorage.setItem("pcrCalcLatest", JSON.stringify(this.dataForStorage['fields']));
+            localStorage.setItem("pcrCalcLatest", JSON.stringify(this.dataForStorage));
         } else {
             // Sorry! No Web Storage support..
         }
