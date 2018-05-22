@@ -183,7 +183,6 @@ class PCRCalc {
         ' .historyMainDiv button.close { position: absolute; top: 1px; right: 1px; background-color: #555555; color: #eeeeee; padding: 5px 10px;}' +
         ' .historyMainDiv button.close:hover {background-color: #454545; cursor: pointer;}';
         for (let i = 0; i < data.length; i++) {
-            //console.log(data[i]['name']+" "+data[i]['updateDate']);
             let b = document.createElement("button");
             let bText = document.createTextNode(data[i]['name']+" "+data[i]['updateDate']);
             b.appendChild(bText);
@@ -228,7 +227,6 @@ class PCRCalc {
                 self.resultFields['outputPolymerase'].innerHTML = data[el]['outputPolymerase'];
                 self.resultFields['outputPolymeraseMax'].innerHTML = data[el]['outputPolymeraseMax'];
                 self.resultFields['outputDNA'].innerHTML = data[el]['outputDNA'];
-
                 mainContainer.remove();
             });
 
@@ -318,7 +316,6 @@ class PCRCalc {
             }
         }
     }
-
 }
 
 var pcrCalc = new PCRCalc();
