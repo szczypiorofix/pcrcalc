@@ -110,20 +110,26 @@ input[type=number] {
         }
     }
 
-    .button-save-offline {
+    .button-offline {
         position: fixed;
         right: 10px;
-        bottom: 10px;
         padding: 10px 25px;
         background-color: @accentColor;
         border: none;
         width: 50px;
         height: 50px;
         color: @textPrimaryColor;
-        font-size: 32px;
+        font-size: 28px;
         .borderRadius(50%);
         .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
         .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
+        &.save {
+            bottom: 10px;
+        }
+        &.load {
+            bottom: 70px;
+            background-color: @secondaryTextColor;
+        }
         i {
             position: absolute;
             top: 50%;
