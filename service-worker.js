@@ -9,9 +9,12 @@ var filesToCache = [
     'help.json',
 
     'js/app.js',
+    'js/app.js.map',
     'js/script.js',
+    'js/script.js.map',
 
     'css/style.css',
+    'css/style.css.map',
     'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
 
     //'webfonts/Lato-Regular.ttf',

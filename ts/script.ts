@@ -53,7 +53,7 @@ class PCRCalc {
                 parseFloat(this.inputFields['inputMaxVolume'].value)
             )
         ).toFixed(2);
-        if (Number.isNaN(parseFloat(r)))
+        if (Number.isNaN(parseFloat(r)) || !Number.isFinite(parseFloat(r)))
             return 0;
         else return r;
     }
@@ -63,7 +63,7 @@ class PCRCalc {
             parseFloat(this.resultFields[i].innerHTML) *
             parseFloat(this.inputFields['numberOfProbes'].value)
         ).toFixed(2);
-        if (Number.isNaN(parseFloat(r)))
+        if (Number.isNaN(parseFloat(r)) || !Number.isFinite(parseFloat(r)))
             return 0;
         else return r;
     }
@@ -163,7 +163,7 @@ class PCRCalc {
         }
     }
 
-    private options(data:Array<string>) {
+    private drawListOfData(data:Array<string>) {
         let self = this;
         let mainContainer = document.createElement('div');
         let mainStyle = document.createElement('style');
@@ -174,64 +174,96 @@ class PCRCalc {
             mainContainer.remove();
         });
         mainContainer.appendChild(buttonClose);
+        let title = document.createElement("h3");
+        title.appendChild(document.createTextNode("Dane zapisane lokalnie:"));
+        mainContainer.appendChild(title);
 
         mainContainer.className = 'historyMainDiv';
         mainStyle.innerHTML = 
         '.historyMainDiv { position: fixed; display: block; top: 5%; left: 5%; width: 90%; height: 90%; background-color: rgba(50, 50, 50, 0.9);} ' +
-        ' .historyMainDiv button {display: block; margin: 10px 5px; padding: 10px 25px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px;} ' +
-        ' .historyMainDiv button:hover {cursor: pointer;}' +
-        ' .historyMainDiv button.close { position: absolute; top: 1px; right: 1px; background-color: #555555; color: #eeeeee; padding: 5px 10px;}' +
+        '.historyMainDiv h3 {margin: 10px;}' +
+        ' .historyMainDiv .row { display: block; width: 100%; }' +
+        ' .historyMainDiv .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px;} ' +
+        ' .historyMainDiv .row button.load:hover {cursor: pointer;}' +
+        ' .historyMainDiv .row button.delete {padding: 5px 10px; background-color: red; border: none; color: #FFFFFF; font-size: 16px; border-radius: 3px;}' +
+        ' .historyMainDiv .row button.delete:hover {cursor: pointer; }' +
+        ' .historyMainDiv button.close { position: absolute; top: 5px; right: 5px; background-color: #666666; color: #eeeeee; padding: 6px 12px; border: none; }' +
         ' .historyMainDiv button.close:hover {background-color: #454545; cursor: pointer;}';
+        
         for (let i = 0; i < data.length; i++) {
             let b = document.createElement("button");
             let bText = document.createTextNode(data[i]['name']+" "+data[i]['updateDate']);
             b.appendChild(bText);
             b.id = 'load'+i;
-            let deleteB = document.createElement('span');
+            b.className = 'load';
+            let deleteB = document.createElement('button');
+            deleteB.className = 'delete';
+            deleteB.id = 'remove'+i;
             deleteB.appendChild(document.createTextNode("x"));
+
+            deleteB.addEventListener('click', function(event) {
+                let e = <HTMLElement>event.currentTarget;
+                let elIdString = e.id.substr(6); // removing 'remove' from id
+                let elIdInt = parseInt(elIdString);
+                if (typeof(Storage) !== "undefined") {
+                    let dataFromStorage = JSON.parse(localStorage.getItem('pcrCalcHistory'));
+                    if (dataFromStorage === null) {
+                        localStorage.setItem('pcrCalcHistory', '[]');
+                        dataFromStorage = [];
+                    }
+                    dataFromStorage.splice(elIdInt, 1);
+                    localStorage.setItem("pcrCalcHistory", JSON.stringify(dataFromStorage));
+                    mainContainer.remove();
+                    self.drawListOfData(dataFromStorage);
+                } else {
+                    console.error("Ta przeglądarka nie obsługuje localStorage!");
+                } 
+            });
 
             b.addEventListener('click', function(event) {
                 
                 let e = <HTMLElement>event.currentTarget;
-                let elId = e.id.substr(4); // removing 'load' from id
-                let el = parseInt(elId);
-                //console.log(el);
+                let elIdString = e.id.substr(4); // removing 'load' from id
+                let elIdInt = parseInt(elIdString);
 
-                self.inputFields['inputMaxVolume'].value = data[el]['inputMaxVolume'];
-                self.inputFields['inputH2O'].value = data[el]['inputH2O'];
-                self.inputFields['inputBuffer'].value = data[el]['inputBuffer'];
-                self.inputFields['inputEnhancer'].value = data[el]['inputEnhancer'];
-                self.inputFields['inputMgCl2'].value = data[el]['inputMgCl2'];
-                self.inputFields['inputPrimer1'].value = data[el]['inputPrimer1'];
-                self.inputFields['inputPrimer2'].value = data[el]['inputPrimer2'];
-                self.inputFields['inputPolymerase'].value = data[el]['inputPolymerase'];
-                self.inputFields['inputDNTPs'].value = data[el]['inputDNTPs'];
-                self.inputFields['inputDNA'].value = data[el]['inputDNA'];
-                self.inputFields['outputMaxVolume'].value = data[el]['outputMaxVolume'];
-                self.inputFields['numberOfProbes'].value = data[el]['numberOfProbes'];
-                self.resultFields['inputDifferenceValue'].innerHTML = data[el]['inputDifferenceValue'];
-                self.resultFields['outputH2O'].innerHTML = data[el]['outputH2O'];
-                self.resultFields['outputH2OMax'].innerHTML = data[el]['outputH2OMax'];
-                self.resultFields['outputBuffer'].innerHTML = data[el]['outputBuffer'];
-                self.resultFields['outputBufferMax'].innerHTML = data[el]['outputBufferMax'];
-                self.resultFields['outputEnhancer'].innerHTML = data[el]['outputEnhancer'];
-                self.resultFields['outputEnhancerMax'].innerHTML = data[el]['outputEnhancerMax'];
-                self.resultFields['outputMgCl2'].innerHTML = data[el]['outputMgCl2'];
-                self.resultFields['outputMgCl2Max'].innerHTML = data[el]['outputMgCl2Max'];
-                self.resultFields['outputPrimer1'].innerHTML = data[el]['outputPrimer1'];
-                self.resultFields['outputPrimer1Max'].innerHTML = data[el]['outputPrimer1Max'];
-                self.resultFields['outputPrimer2'].innerHTML = data[el]['outputPrimer2'];
-                self.resultFields['outputPrimer2Max'].innerHTML = data[el]['outputPrimer2Max'];
-                self.resultFields['outputDNTPs'].innerHTML = data[el]['outputDNTPs'];
-                self.resultFields['outputDNTPsMax'].innerHTML = data[el]['outputDNTPsMax'];
-                self.resultFields['outputPolymerase'].innerHTML = data[el]['outputPolymerase'];
-                self.resultFields['outputPolymeraseMax'].innerHTML = data[el]['outputPolymeraseMax'];
-                self.resultFields['outputDNA'].innerHTML = data[el]['outputDNA'];
+                self.inputFields['inputMaxVolume'].value = data[elIdInt]['inputMaxVolume'];
+                self.inputFields['inputH2O'].value = data[elIdInt]['inputH2O'];
+                self.inputFields['inputBuffer'].value = data[elIdInt]['inputBuffer'];
+                self.inputFields['inputEnhancer'].value = data[elIdInt]['inputEnhancer'];
+                self.inputFields['inputMgCl2'].value = data[elIdInt]['inputMgCl2'];
+                self.inputFields['inputPrimer1'].value = data[elIdInt]['inputPrimer1'];
+                self.inputFields['inputPrimer2'].value = data[elIdInt]['inputPrimer2'];
+                self.inputFields['inputPolymerase'].value = data[elIdInt]['inputPolymerase'];
+                self.inputFields['inputDNTPs'].value = data[elIdInt]['inputDNTPs'];
+                self.inputFields['inputDNA'].value = data[elIdInt]['inputDNA'];
+                self.inputFields['outputMaxVolume'].value = data[elIdInt]['outputMaxVolume'];
+                self.inputFields['numberOfProbes'].value = data[elIdInt]['numberOfProbes'];
+                self.resultFields['inputDifferenceValue'].innerHTML = data[elIdInt]['inputDifferenceValue'];
+                self.resultFields['outputH2O'].innerHTML = data[elIdInt]['outputH2O'];
+                self.resultFields['outputH2OMax'].innerHTML = data[elIdInt]['outputH2OMax'];
+                self.resultFields['outputBuffer'].innerHTML = data[elIdInt]['outputBuffer'];
+                self.resultFields['outputBufferMax'].innerHTML = data[elIdInt]['outputBufferMax'];
+                self.resultFields['outputEnhancer'].innerHTML = data[elIdInt]['outputEnhancer'];
+                self.resultFields['outputEnhancerMax'].innerHTML = data[elIdInt]['outputEnhancerMax'];
+                self.resultFields['outputMgCl2'].innerHTML = data[elIdInt]['outputMgCl2'];
+                self.resultFields['outputMgCl2Max'].innerHTML = data[elIdInt]['outputMgCl2Max'];
+                self.resultFields['outputPrimer1'].innerHTML = data[elIdInt]['outputPrimer1'];
+                self.resultFields['outputPrimer1Max'].innerHTML = data[elIdInt]['outputPrimer1Max'];
+                self.resultFields['outputPrimer2'].innerHTML = data[elIdInt]['outputPrimer2'];
+                self.resultFields['outputPrimer2Max'].innerHTML = data[elIdInt]['outputPrimer2Max'];
+                self.resultFields['outputDNTPs'].innerHTML = data[elIdInt]['outputDNTPs'];
+                self.resultFields['outputDNTPsMax'].innerHTML = data[elIdInt]['outputDNTPsMax'];
+                self.resultFields['outputPolymerase'].innerHTML = data[elIdInt]['outputPolymerase'];
+                self.resultFields['outputPolymeraseMax'].innerHTML = data[elIdInt]['outputPolymeraseMax'];
+                self.resultFields['outputDNA'].innerHTML = data[elIdInt]['outputDNA'];
                 mainContainer.remove();
             });
+            let row = document.createElement('div');
+            row.className = 'row';
+            row.appendChild(b);
+            row.appendChild(deleteB);
 
-            mainContainer.appendChild(b);
-            mainContainer.appendChild(deleteB);
+            mainContainer.appendChild(row);
         }
         mainContainer.appendChild(mainStyle);
         document.getElementsByTagName('body')[0].appendChild(mainContainer);
@@ -247,7 +279,7 @@ class PCRCalc {
                     dataFromStorage = [];
                 }
                 //console.log(dataFromStorage);
-                self.options(dataFromStorage);
+                self.drawListOfData(dataFromStorage);
             } else {
                 console.error("Ta przeglądarka nie obsługuje localStorage!");
             }    
@@ -255,7 +287,7 @@ class PCRCalc {
         document.getElementById("saveoffline").addEventListener('click', function(event) {
             if (typeof(Storage) !== "undefined") {
                 let dataName = prompt("Podaj nazwę zestawu: ");
-                self.dataForStorage['fields'] = {
+                self.dataForStorage = {
                     'name': dataName,
                     'updateDate': new Date().toLocaleString(),
                     'inputMaxVolume': self.inputFields['inputMaxVolume'].value,
@@ -291,10 +323,10 @@ class PCRCalc {
                 };
                 let history = localStorage.getItem("pcrCalcHistory");
                 if (history === null) {
-                    localStorage.setItem("pcrCalcHistory", "["+JSON.stringify(self.dataForStorage['fields'])+"] ");
+                    localStorage.setItem("pcrCalcHistory", "["+JSON.stringify(self.dataForStorage)+"] ");
                 } else {
                     let h = JSON.parse(history);
-                    h.push(self.dataForStorage['fields']);
+                    h.push(self.dataForStorage);
                     localStorage.setItem("pcrCalcHistory", JSON.stringify(h));
                 } 
             } else {
@@ -303,14 +335,56 @@ class PCRCalc {
         });
     }
 
+    public getLastResults() {
+        if (typeof(Storage) !== "undefined") {
+            let dataFromStorage = JSON.parse(localStorage.getItem('pcrCalcLatest'));
+            if (dataFromStorage !== null) {
+                this.inputFields['inputMaxVolume'].value = dataFromStorage['inputMaxVolume'];
+                this.inputFields['inputH2O'].value = dataFromStorage['inputH2O'];
+                this.inputFields['inputBuffer'].value = dataFromStorage['inputBuffer'];
+                this.inputFields['inputEnhancer'].value = dataFromStorage['inputEnhancer'];
+                this.inputFields['inputMgCl2'].value = dataFromStorage['inputMgCl2'];
+                this.inputFields['inputPrimer1'].value = dataFromStorage['inputPrimer1'];
+                this.inputFields['inputPrimer2'].value = dataFromStorage['inputPrimer2'];
+                this.inputFields['inputPolymerase'].value = dataFromStorage['inputPolymerase'];
+                this.inputFields['inputDNTPs'].value = dataFromStorage['inputDNTPs'];
+                this.inputFields['inputDNA'].value = dataFromStorage['inputDNA'];
+                this.inputFields['outputMaxVolume'].value = dataFromStorage['outputMaxVolume'];
+                this.inputFields['numberOfProbes'].value = dataFromStorage['numberOfProbes'];
+                this.resultFields['inputDifferenceValue'].innerHTML = dataFromStorage['inputDifferenceValue'];
+                this.resultFields['outputH2O'].innerHTML = dataFromStorage['outputH2O'];
+                this.resultFields['outputH2OMax'].innerHTML = dataFromStorage['outputH2OMax'];
+                this.resultFields['outputBuffer'].innerHTML = dataFromStorage['outputBuffer'];
+                this.resultFields['outputBufferMax'].innerHTML = dataFromStorage['outputBufferMax'];
+                this.resultFields['outputEnhancer'].innerHTML = dataFromStorage['outputEnhancer'];
+                this.resultFields['outputEnhancerMax'].innerHTML = dataFromStorage['outputEnhancerMax'];
+                this.resultFields['outputMgCl2'].innerHTML = dataFromStorage['outputMgCl2'];
+                this.resultFields['outputMgCl2Max'].innerHTML = dataFromStorage['outputMgCl2Max'];
+                this.resultFields['outputPrimer1'].innerHTML = dataFromStorage['outputPrimer1'];
+                this.resultFields['outputPrimer1Max'].innerHTML = dataFromStorage['outputPrimer1Max'];
+                this.resultFields['outputPrimer2'].innerHTML = dataFromStorage['outputPrimer2'];
+                this.resultFields['outputPrimer2Max'].innerHTML = dataFromStorage['outputPrimer2Max'];
+                this.resultFields['outputDNTPs'].innerHTML = dataFromStorage['outputDNTPs'];
+                this.resultFields['outputDNTPsMax'].innerHTML = dataFromStorage['outputDNTPsMax'];
+                this.resultFields['outputPolymerase'].innerHTML = dataFromStorage['outputPolymerase'];
+                this.resultFields['outputPolymeraseMax'].innerHTML = dataFromStorage['outputPolymeraseMax'];
+                this.resultFields['outputDNA'].innerHTML = dataFromStorage['outputDNA'];
+            } 
+        } else {
+            console.error("Ta przeglądarka nie obsługuje localStorage!");
+        }  
+    }
+
     public init() {
+        this.getLastResults();
         this.recalc();
         this.addListener();
         var self = this;
         for (var property in this.inputFields) {
             if (this.inputFields.hasOwnProperty(property)) {
                 if (this.inputFields[property])
-                this.inputFields[property].addEventListener('input', function(e) {
+                this.inputFields[property].addEventListener('input', function(event) {
+                    if (event.currentTarget.value === '') event.currentTarget.value = 0;
                     self.recalc();
                 });
             }
