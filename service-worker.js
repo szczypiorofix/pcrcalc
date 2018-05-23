@@ -1,10 +1,6 @@
-var cacheName = 'PCR-calc.v-1.00.000';
+var cacheName = 'PCR-calc.v-1.00.001';
 
-/**
- * 'css/fontawesome-all.min.css',
- */
 var filesToCache = [
-    '/',
     'index.html',
     'help.json',
 
@@ -17,7 +13,6 @@ var filesToCache = [
     'css/style.css.map',
     'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
 
-    //'webfonts/Lato-Regular.ttf',
     'https://fonts.googleapis.com/css?family=Lato|Raleway:200',
 
     'manifest.json',
