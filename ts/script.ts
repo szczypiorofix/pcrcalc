@@ -180,15 +180,15 @@ class PCRCalc {
 
         mainContainer.className = 'historyMainDiv';
         mainStyle.innerHTML = 
-        '.historyMainDiv { position: fixed; display: block; top: 5%; left: 5%; width: 90%; height: 90%; background-color: rgba(50, 50, 50, 0.9);} ' +
+        '.historyMainDiv { position: fixed; display: block; top: 5%; left: 5%; width: 90%; height: 90%; background-color: rgba(50, 50, 50, 0.9); border-radius: 3px; box-shadow: 1px 1px 12px 0 rgba(50, 50, 50, 0.5);} ' +
         '.historyMainDiv h3 {margin: 10px;}' +
         ' .historyMainDiv .row { display: block; width: 100%; }' +
-        ' .historyMainDiv .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px;} ' +
-        ' .historyMainDiv .row button.load:hover {cursor: pointer;}' +
-        ' .historyMainDiv .row button.delete {padding: 5px 10px; background-color: red; border: none; color: #FFFFFF; font-size: 16px; border-radius: 3px;}' +
-        ' .historyMainDiv .row button.delete:hover {cursor: pointer; }' +
+        ' .historyMainDiv .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px; } ' +
+        ' .historyMainDiv .row button.load:hover {cursor: pointer; background-color: #EE3071;}' +
+        ' .historyMainDiv .row button.delete {padding: 5px 10px; background-color: #EE3344; border: none; color: #FFFFFF; font-size: 16px; border-radius: 3px;}' +
+        ' .historyMainDiv .row button.delete:hover {cursor: pointer; background-color: #DD2233;}' +
         ' .historyMainDiv button.close { position: absolute; top: 5px; right: 5px; background-color: #666666; color: #eeeeee; padding: 6px 12px; border: none; }' +
-        ' .historyMainDiv button.close:hover {background-color: #454545; cursor: pointer;}';
+        ' .historyMainDiv button.close:hover {background-color: #545454; cursor: pointer;}';
         
         for (let i = 0; i < data.length; i++) {
             let b = document.createElement("button");
@@ -287,48 +287,50 @@ class PCRCalc {
         document.getElementById("saveoffline").addEventListener('click', function(event) {
             if (typeof(Storage) !== "undefined") {
                 let dataName = prompt("Podaj nazwę zestawu: ");
-                self.dataForStorage = {
-                    'name': dataName,
-                    'updateDate': new Date().toLocaleString(),
-                    'inputMaxVolume': self.inputFields['inputMaxVolume'].value,
-                    'inputH2O': self.inputFields['inputH2O'].value,
-                    'inputBuffer': self.inputFields['inputBuffer'].value,
-                    'inputEnhancer': self.inputFields['inputEnhancer'].value,
-                    'inputMgCl2': self.inputFields['inputMgCl2'].value,
-                    'inputPrimer1': self.inputFields['inputPrimer1'].value,
-                    'inputPrimer2': self.inputFields['inputPrimer2'].value,
-                    'inputPolymerase': self.inputFields['inputPolymerase'].value,
-                    'inputDNTPs': self.inputFields['inputDNTPs'].value,
-                    'inputDNA': self.inputFields['inputDNA'].value,
-                    'outputMaxVolume': self.inputFields['outputMaxVolume'].value,
-                    'numberOfProbes': self.inputFields['numberOfProbes'].value,
-                    'inputDifferenceValue': self.resultFields['inputDifferenceValue'].innerHTML,
-                    'outputH2O': self.resultFields['outputH2O'].innerHTML,
-                    'outputH2OMax': self.resultFields['outputH2OMax'].innerHTML,
-                    'outputBuffer': self.resultFields['outputBuffer'].innerHTML,
-                    'outputBufferMax': self.resultFields['outputBufferMax'].innerHTML,
-                    'outputEnhancer': self.resultFields['outputEnhancer'].innerHTML,
-                    'outputEnhancerMax': self.resultFields['outputEnhancerMax'].innerHTML,
-                    'outputMgCl2': self.resultFields['outputMgCl2'].innerHTML,
-                    'outputMgCl2Max': self.resultFields['outputMgCl2Max'].innerHTML,
-                    'outputPrimer1': self.resultFields['outputPrimer1'].innerHTML,
-                    'outputPrimer1Max': self.resultFields['outputPrimer1Max'].innerHTML,
-                    'outputPrimer2': self.resultFields['outputPrimer2'].innerHTML,
-                    'outputPrimer2Max': self.resultFields['outputPrimer2Max'].innerHTML,
-                    'outputDNTPs': self.resultFields['outputDNTPs'].innerHTML,
-                    'outputDNTPsMax': self.resultFields['outputDNTPsMax'].innerHTML,
-                    'outputPolymerase': self.resultFields['outputPolymerase'].innerHTML,
-                    'outputPolymeraseMax': self.resultFields['outputPolymeraseMax'].innerHTML,
-                    'outputDNA': self.resultFields['outputDNA'].innerHTML
-                };
-                let history = localStorage.getItem("pcrCalcHistory");
-                if (history === null) {
-                    localStorage.setItem("pcrCalcHistory", "["+JSON.stringify(self.dataForStorage)+"] ");
-                } else {
-                    let h = JSON.parse(history);
-                    h.push(self.dataForStorage);
-                    localStorage.setItem("pcrCalcHistory", JSON.stringify(h));
-                } 
+                if (dataName !== null) {
+                    self.dataForStorage = {
+                        'name': dataName,
+                        'updateDate': new Date().toLocaleString(),
+                        'inputMaxVolume': self.inputFields['inputMaxVolume'].value,
+                        'inputH2O': self.inputFields['inputH2O'].value,
+                        'inputBuffer': self.inputFields['inputBuffer'].value,
+                        'inputEnhancer': self.inputFields['inputEnhancer'].value,
+                        'inputMgCl2': self.inputFields['inputMgCl2'].value,
+                        'inputPrimer1': self.inputFields['inputPrimer1'].value,
+                        'inputPrimer2': self.inputFields['inputPrimer2'].value,
+                        'inputPolymerase': self.inputFields['inputPolymerase'].value,
+                        'inputDNTPs': self.inputFields['inputDNTPs'].value,
+                        'inputDNA': self.inputFields['inputDNA'].value,
+                        'outputMaxVolume': self.inputFields['outputMaxVolume'].value,
+                        'numberOfProbes': self.inputFields['numberOfProbes'].value,
+                        'inputDifferenceValue': self.resultFields['inputDifferenceValue'].innerHTML,
+                        'outputH2O': self.resultFields['outputH2O'].innerHTML,
+                        'outputH2OMax': self.resultFields['outputH2OMax'].innerHTML,
+                        'outputBuffer': self.resultFields['outputBuffer'].innerHTML,
+                        'outputBufferMax': self.resultFields['outputBufferMax'].innerHTML,
+                        'outputEnhancer': self.resultFields['outputEnhancer'].innerHTML,
+                        'outputEnhancerMax': self.resultFields['outputEnhancerMax'].innerHTML,
+                        'outputMgCl2': self.resultFields['outputMgCl2'].innerHTML,
+                        'outputMgCl2Max': self.resultFields['outputMgCl2Max'].innerHTML,
+                        'outputPrimer1': self.resultFields['outputPrimer1'].innerHTML,
+                        'outputPrimer1Max': self.resultFields['outputPrimer1Max'].innerHTML,
+                        'outputPrimer2': self.resultFields['outputPrimer2'].innerHTML,
+                        'outputPrimer2Max': self.resultFields['outputPrimer2Max'].innerHTML,
+                        'outputDNTPs': self.resultFields['outputDNTPs'].innerHTML,
+                        'outputDNTPsMax': self.resultFields['outputDNTPsMax'].innerHTML,
+                        'outputPolymerase': self.resultFields['outputPolymerase'].innerHTML,
+                        'outputPolymeraseMax': self.resultFields['outputPolymeraseMax'].innerHTML,
+                        'outputDNA': self.resultFields['outputDNA'].innerHTML
+                    };
+                    let history = localStorage.getItem("pcrCalcHistory");
+                    if (history === null) {
+                        localStorage.setItem("pcrCalcHistory", "["+JSON.stringify(self.dataForStorage)+"] ");
+                    } else {
+                        let h = JSON.parse(history);
+                        h.push(self.dataForStorage);
+                        localStorage.setItem("pcrCalcHistory", JSON.stringify(h));
+                    }
+                }
             } else {
                 console.error("Ta przeglądarka nie obsługuje localStorage!");
             }            

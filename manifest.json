@@ -1,6 +1,7 @@
 {
 "name": "PCR Kalculator",
 "short_name": "PCRCalc",
+"gcm_sender_id": "370072803732",
 "start_url": "/pcrcalc/",
 "display": "standalone",
 "background_color": "#303F9F",

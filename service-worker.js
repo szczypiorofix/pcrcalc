@@ -1,8 +1,8 @@
-var cacheName = 'PCR-calc.v-1.00.001';
+var cacheName = 'PCR-calc.v-1.00.004';
 
 var filesToCache = [
     'index.html',
-    'help.json',
+    //  'help.json',
 
     'js/pwa.js',
     'js/pwa.js.map',
@@ -11,9 +11,7 @@ var filesToCache = [
 
     'css/style.css',
     'css/style.css.map',
-    'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
 
-    'https://fonts.googleapis.com/css?family=Lato|Raleway:200',
 
     'manifest.json',
     'browserconfig.xml',
@@ -74,16 +72,83 @@ self.addEventListener('fetch', function(e) {
     );
 });
 
+/** STANDARDOWY PRZYKŁAD */
+// self.addEventListener('install', function(e) {
+//     console.log('[ServiceWorker] Install');
+//     e.waitUntil(
+//         caches.open(cacheName).then(function(cache) {
+//         console.log('[ServiceWorker] Caching app shell');
+//         return cache.addAll(filesToCache);
+//         })
+//     );
+// });
+
+
+/** POBIERAJ I ZWRACAJ CO NIEZBĘDNE ALE DODAJE DO CACHE TAKŻE INNE ELEMENTY NA POTEM BEZ WPŁYWU NA TE GŁÓWNE */
 self.addEventListener('install', function(e) {
     console.log('[ServiceWorker] Install');
     e.waitUntil(
         caches.open(cacheName).then(function(cache) {
-        console.log('[ServiceWorker] Caching app shell');
-        // To jest konieczne
-        return cache.addAll(filesToCache);
-
-        // To nie jest konieczne ale może być pobierane potem
-        //cache.addAll(filesToCache);
+            console.log('[ServiceWorker] Caching app shell');
+            cache.addAll([
+                'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+                'https://fonts.googleapis.com/css?family=Lato|Raleway:200',
+            ]); // - pliki na potem, pobieranie może się udać lub nie, bez wplywu na resztę
+            return cache.addAll(filesToCache); // - niezbędne pliki
         })
     );
 });
+
+
+/** SYNC I PUSH */
+self.addEventListener('sync', function(event) {
+    console.log(event);
+    if (event.tag == 'update-leaderboard') {
+      event.waitUntil(
+        caches.open('mygame-dynamic').then(function(cache) {
+          return cache.add('help.json');
+        })
+      );
+    }
+});
+
+self.addEventListener('push', function(event) {
+    console.log(event);
+    if (event.data.text() == 'new-email') {
+      event.waitUntil(
+        caches.open(cacheName).then(function(cache) {
+          return fetch('/inbox.json').then(function(response) {
+            cache.put('/inbox.json', response.clone());
+            return response.json();
+          });
+        }).then(function(emails) {
+          registration.showNotification("New email", {
+            body: "From " + emails[0].from.name, tag: "new-email"
+          });
+        })
+      );
+    }
+  });
+  
+  self.addEventListener('notificationclick', function(event) {
+    new WindowClient('/inbox/');
+    if (event.notification.tag == 'new-email') {
+      // Assume that all of the resources needed to render
+      // /inbox/ have previously been cached, e.g. as part
+      // of the install handler.
+      new WindowClient('/inbox/');
+    }
+});
+
+/** POBIERAJ I ZWRACAJ CO NIEZBĘDNE ALE DODAJE DO CACHE TAKŻE INNE ELEMENTY NA POTEM BEZ WPŁYWU NA TE GŁÓWNE */
+// self.addEventListener('install', function(e) {
+//     console.log('[ServiceWorker] Install');
+//     e.waitUntil(
+//         caches.open(cacheName).then(function(cache) {
+//         console.log('[ServiceWorker] Caching app shell');
+//         cache.addAll(filesToCache); // - pliki na potem, pobieranie może się udać lub nie, bez wplywu na resztę
+//         return cache.addAll(filesToCache); // - niezbędne pliki
+//         })
+//     );
+// });
+
