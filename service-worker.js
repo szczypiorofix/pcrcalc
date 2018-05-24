@@ -4,8 +4,8 @@ var filesToCache = [
     'index.html',
     'help.json',
 
-    'js/app.js',
-    'js/app.js.map',
+    'js/pwa.js',
+    'js/pwa.js.map',
     'js/script.js',
     'js/script.js.map',
 
