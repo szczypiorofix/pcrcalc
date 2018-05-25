@@ -19,6 +19,9 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 else {
     console.warn('Push messaging is not supported');
 }
+Notification.requestPermission().then(function (result) {
+    console.log(result);
+});
 // document.getElementById("saveoffline").addEventListener('click', function(event) {
 //     event.preventDefault();
 //     caches.open('PCR-calc.v-1.00.000').then(function(cache) {

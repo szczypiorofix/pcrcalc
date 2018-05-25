@@ -130,14 +130,22 @@ self.addEventListener('push', function(event) {
     }
   });
   
-  self.addEventListener('notificationclick', function(event) {
-    new WindowClient('/inbox/');
-    if (event.notification.tag == 'new-email') {
-      // Assume that all of the resources needed to render
-      // /inbox/ have previously been cached, e.g. as part
-      // of the install handler.
-      new WindowClient('/inbox/');
+self.addEventListener('notificationclick', function(e) {
+    var notification = e.notification;
+    var primaryKey = notification.data.primaryKey;
+    var action = e.action;
+    if (action === 'close') {
+        notification.close();
+    } else {
+        clients.openWindow('http://www.google.com');
+        notification.close();
     }
+});
+
+self.addEventListener('notificationclose', function(e) {
+    var notification = e.notification;
+    var primaryKey = notification.data.primaryKey;
+    console.log('Closed notification: ' + primaryKey);
 });
 
 /** POBIERAJ I ZWRACAJ CO NIEZBĘDNE ALE DODAJE DO CACHE TAKŻE INNE ELEMENTY NA POTEM BEZ WPŁYWU NA TE GŁÓWNE */
