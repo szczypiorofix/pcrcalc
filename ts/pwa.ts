@@ -18,6 +18,37 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
     console.warn('Push messaging is not supported');
 }
 
+let deferredPrompt;
+let btnAdd = document.getElementById("addToHomeScreenButton");
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    console.log('To jest powiadomienie o dodaniu PWA zamiast standardowego z przeglądarki.');
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    console.log(deferredPrompt);
+    //btnAdd.style.display = 'block';
+});
+
+btnAdd.addEventListener('click', (e) => {
+    // hide our user interface that shows our A2HS button
+    // btnAdd.style.display = 'none';
+    // Show the prompt
+    if (deferredPrompt !== undefined) {
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice
+          .then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the A2HS prompt');
+            } else {
+              console.log('User dismissed the A2HS prompt');
+            }
+            deferredPrompt = null;
+          });
+    }
+});
 
 
 

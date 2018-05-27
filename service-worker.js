@@ -104,31 +104,31 @@ self.addEventListener('install', function(e) {
 self.addEventListener('sync', function(event) {
     console.log(event);
     if (event.tag == 'update-leaderboard') {
-      event.waitUntil(
-        caches.open('mygame-dynamic').then(function(cache) {
-          return cache.add('help.json');
-        })
-      );
+        event.waitUntil(
+            caches.open('mygame-dynamic').then(function(cache) {
+            return cache.add('help.json');
+            })
+        );
     }
 });
 
 self.addEventListener('push', function(event) {
     console.log(event);
     if (event.data.text() == 'new-email') {
-      event.waitUntil(
-        caches.open(cacheName).then(function(cache) {
-          return fetch('/inbox.json').then(function(response) {
-            cache.put('/inbox.json', response.clone());
-            return response.json();
-          });
-        }).then(function(emails) {
-          registration.showNotification("New email", {
-            body: "From " + emails[0].from.name, tag: "new-email"
-          });
-        })
-      );
+        event.waitUntil(
+            caches.open(cacheName).then(function(cache) {
+            return fetch('/inbox.json').then(function(response) {
+                cache.put('/inbox.json', response.clone());
+                return response.json();
+            });
+            }).then(function(emails) {
+            registration.showNotification("New email", {
+                body: "From " + emails[0].from.name, tag: "new-email"
+            });
+            })
+        );
     }
-  });
+});
   
 self.addEventListener('notificationclick', function(e) {
     var notification = e.notification;
