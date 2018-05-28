@@ -162,11 +162,11 @@ class PCRCalc {
                 ' .historyMainDiv h3 {margin: 10px;}' +
                 ' .historyMainDiv .data-list {overflow: auto; max-height: 92%;}' +
                 ' .historyMainDiv .data-list .row {display: block; width: 100%;}' +
-                ' .historyMainDiv .data-list .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px; } ' +
+                ' .historyMainDiv .data-list .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px;}' +
                 ' .historyMainDiv .data-list .row button.load:hover {cursor: pointer; background-color: #EE3071;}' +
                 ' .historyMainDiv .data-list .row button.delete {padding: 5px 10px; background-color: #EE3344; border: none; color: #FFFFFF; font-size: 16px; border-radius: 3px;}' +
                 ' .historyMainDiv .data-list .row button.delete:hover {cursor: pointer; background-color: #DD2233;}' +
-                ' .historyMainDiv button.close {position: absolute; top: 5px; right: 5px; background-color: #666666; color: #eeeeee; padding: 6px 12px; border: none; }' +
+                ' .historyMainDiv button.close {position: absolute; top: 5px; right: 5px; background-color: #666666; color: #eeeeee; padding: 6px 12px; border: none;}' +
                 ' .historyMainDiv button.close:hover {background-color: #545454; cursor: pointer;}';
         for (let i = 0; i < data.length; i++) {
             let b = document.createElement("button");
