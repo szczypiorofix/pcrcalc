@@ -154,16 +154,19 @@ class PCRCalc {
         let title = document.createElement("h3");
         title.appendChild(document.createTextNode("Dane zapisane lokalnie:"));
         mainContainer.appendChild(title);
+        let listContainer = document.createElement('div');
+        listContainer.className = 'data-list';
         mainContainer.className = 'historyMainDiv';
         mainStyle.innerHTML =
-            '.historyMainDiv { position: fixed; display: block; top: 5%; left: 5%; width: 90%; height: 90%; background-color: rgba(50, 50, 50, 0.9); border-radius: 3px; box-shadow: 1px 1px 12px 0 rgba(50, 50, 50, 0.5);} ' +
-                '.historyMainDiv h3 {margin: 10px;}' +
-                ' .historyMainDiv .row { display: block; width: 100%; }' +
-                ' .historyMainDiv .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px; } ' +
-                ' .historyMainDiv .row button.load:hover {cursor: pointer; background-color: #EE3071;}' +
-                ' .historyMainDiv .row button.delete {padding: 5px 10px; background-color: #EE3344; border: none; color: #FFFFFF; font-size: 16px; border-radius: 3px;}' +
-                ' .historyMainDiv .row button.delete:hover {cursor: pointer; background-color: #DD2233;}' +
-                ' .historyMainDiv button.close { position: absolute; top: 5px; right: 5px; background-color: #666666; color: #eeeeee; padding: 6px 12px; border: none; }' +
+            ' .historyMainDiv {position: fixed; display: block; top: 5px; left: 5px; width: calc(100% - 10px); height: calc(100% - 10px); background-color: rgba(50, 50, 50, 0.9); border-radius: 3px; box-shadow: 1px 1px 12px 0 rgba(50, 50, 50, 0.7);} ' +
+                ' .historyMainDiv h3 {margin: 10px;}' +
+                ' .historyMainDiv .data-list {overflow: auto; max-height: 92%;}' +
+                ' .historyMainDiv .data-list .row {display: block; width: 100%;}' +
+                ' .historyMainDiv .data-list .row button.load {margin: 5px 10px; padding: 6px 10px; background-color: #FF4081; color: #FFFFFF; border: none; border-radius: 3px; } ' +
+                ' .historyMainDiv .data-list .row button.load:hover {cursor: pointer; background-color: #EE3071;}' +
+                ' .historyMainDiv .data-list .row button.delete {padding: 5px 10px; background-color: #EE3344; border: none; color: #FFFFFF; font-size: 16px; border-radius: 3px;}' +
+                ' .historyMainDiv .data-list .row button.delete:hover {cursor: pointer; background-color: #DD2233;}' +
+                ' .historyMainDiv button.close {position: absolute; top: 5px; right: 5px; background-color: #666666; color: #eeeeee; padding: 6px 12px; border: none; }' +
                 ' .historyMainDiv button.close:hover {background-color: #545454; cursor: pointer;}';
         for (let i = 0; i < data.length; i++) {
             let b = document.createElement("button");
@@ -234,8 +237,9 @@ class PCRCalc {
             row.className = 'row';
             row.appendChild(b);
             row.appendChild(deleteB);
-            mainContainer.appendChild(row);
+            listContainer.appendChild(row);
         }
+        mainContainer.appendChild(listContainer);
         mainContainer.appendChild(mainStyle);
         document.getElementsByTagName('body')[0].appendChild(mainContainer);
     }
