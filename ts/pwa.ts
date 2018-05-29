@@ -19,15 +19,16 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 }
 
 let deferredPrompt;
-let btnAdd = document.getElementById("addToHomeScreenButton");
+let btnAdd = document.getElementById("offline-button-yes");
 
 window.addEventListener('beforeinstallprompt', (e) => {
     //e.preventDefault();
     console.log('Teraz powinno się pojawić zastępcze powiadomienie o możliwości dodania do homescreen');
     deferredPrompt = e;
     console.log(deferredPrompt);
-    //btnAdd.style.display = 'block';
+    document.getElementById('offline-div').style.display = 'block';
 });
+
 
 btnAdd.addEventListener('click', (e) => {
     // hide our user interface that shows our A2HS button

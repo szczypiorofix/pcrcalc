@@ -48,13 +48,41 @@ input[type=number] {
         font-family: 'Raleway', sans-serif;
         padding: 15px 0;
         text-align: center;
-        background-color: @darkPrimaryColor;
+        background-color: @primaryColor;
         a {
             text-decoration: none;
             h1 {
                 font-size: 36px;
                 font-weight: 500;
                 color: @textPrimaryColor;
+            }
+        }
+    }
+
+    #offline-div {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        background-color: @darkPrimaryColor;
+        .flexBox();
+        display: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        span {
+            margin-left: 5px;
+            margin-right: 15px;
+        }
+        .offline-buttons {
+            button {
+                padding: 6px 15px;
+                background-color: @accentColor;
+                border: none;
+                color: @textPrimaryColor;
+                .borderRadius(3%);
+                .boxShadow(0, 0, 1px, 1px, rgba(10, 10, 10, 0.4));
+                .boxShadow(1px, 1px, 8px, 0, rgba(10, 10, 10, 0.5));
             }
         }
     }
