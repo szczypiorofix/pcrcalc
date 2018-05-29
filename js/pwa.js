@@ -1,7 +1,7 @@
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     navigator.serviceWorker.register('./service-worker.js').then(function (reg) {
         console.log('Service Worker Registered.');
-        console.log(reg.pushManager);
+        //console.log(reg.pushManager);
         reg.pushManager.getSubscription().then(function (sub) {
             if (sub === null) {
                 // Update UI to ask user to register for Push
@@ -17,15 +17,13 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
     });
 }
 else {
-    console.warn('Push messaging is not supported');
+    console.warn('Push messaging and Service Worker is not supported');
 }
 let deferredPrompt;
 let btnAdd = document.getElementById("addToHomeScreenButton");
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    console.log('To jest powiadomienie o dodaniu PWA zamiast standardowego z przeglądarki.');
-    // Stash the event so it can be triggered later.
+    //e.preventDefault();
+    console.log('Teraz powinno się pojawić zastępcze powiadomienie o możliwości dodania do homescreen');
     deferredPrompt = e;
     console.log(deferredPrompt);
     //btnAdd.style.display = 'block';
@@ -34,7 +32,8 @@ btnAdd.addEventListener('click', (e) => {
     // hide our user interface that shows our A2HS button
     // btnAdd.style.display = 'none';
     // Show the prompt
-    if (deferredPrompt !== undefined) {
+    console.log(deferredPrompt);
+    if (deferredPrompt !== undefined || deferredPrompt !== null) {
         deferredPrompt.prompt();
         // Wait for the user to respond to the prompt
         deferredPrompt.userChoice
