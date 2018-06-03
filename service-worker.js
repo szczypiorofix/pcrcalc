@@ -1,8 +1,13 @@
-var cacheName = 'PCR-calc.v-1.00.004';
+var cacheName = 'PCR-calc.v-1.00.006';
 
 var filesToCache = [
     'index.html',
+<<<<<<< HEAD
      'help.json',
+=======
+    'help.html',
+    'help.json',
+>>>>>>> 67be511635b510ce2bf7373b97c05dcdfd7fb5ae
 
     'js/pwa.js',
     'js/pwa.js.map',
@@ -41,7 +46,14 @@ var filesToCache = [
     'icons/ms-icon-70x70.png',
     'icons/ms-icon-144x144.png',
     'icons/ms-icon-150x150.png',
+<<<<<<< HEAD
     'icons/ms-icon-310x310.png'
+=======
+    'icons/ms-icon-310x310.png',
+
+    'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+    'https://fonts.googleapis.com/css?family=Lato|Raleway:200'
+>>>>>>> 67be511635b510ce2bf7373b97c05dcdfd7fb5ae
 ];
 
 self.addEventListener('activate', function(e) {
@@ -91,10 +103,14 @@ self.addEventListener('install', function(e) {
     e.waitUntil(
         caches.open(cacheName).then(function(cache) {
             console.log('[ServiceWorker] Caching app shell');
+<<<<<<< HEAD
             //cache.addAll([
             //    'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
             //    'https://fonts.googleapis.com/css?family=Lato|Raleway:200',
             //]); // - pliki na potem, pobieranie może się udać lub nie, bez wplywu na resztę
+=======
+            //cache.addAll([]); // - pliki na potem, pobieranie może się udać lub nie, bez wplywu na resztę
+>>>>>>> 67be511635b510ce2bf7373b97c05dcdfd7fb5ae
             return cache.addAll(filesToCache); // - niezbędne pliki
         })
     );
