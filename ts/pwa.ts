@@ -21,13 +21,13 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 let deferredPrompt;
 let btnAdd = document.getElementById("offline-button-yes");
 
-window.addEventListener('beforeinstallprompt', (e) => {
-    //e.preventDefault();
-    console.log('Teraz powinno się pojawić zastępcze powiadomienie o możliwości dodania do homescreen');
-    deferredPrompt = e;
-    console.log(deferredPrompt);
-    document.getElementById('offline-div').style.display = 'block';
-});
+// window.addEventListener('beforeinstallprompt', (e) => {
+//     //e.preventDefault();
+//     console.log('Teraz powinno się pojawić zastępcze powiadomienie o możliwości dodania do homescreen');
+//     deferredPrompt = e;
+//     console.log(deferredPrompt);
+//     document.getElementById('offline-div').style.display = 'block';
+// });
 
 
 btnAdd.addEventListener('click', (e) => {
