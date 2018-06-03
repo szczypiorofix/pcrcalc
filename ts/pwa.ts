@@ -23,42 +23,12 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 // var offlineDiv = document.getElementById("offline-div");
 
 // window.addEventListener('beforeinstallprompt', (e) => {
-<<<<<<< HEAD
-//     //e.preventDefault();
-//     console.log('Teraz powinno się pojawić zastępcze powiadomienie o możliwości dodania do homescreen');
-//     deferredPrompt = e;
-//     console.log(deferredPrompt);
-//     document.getElementById('offline-div').style.display = 'block';
-// });
-
-
-btnAdd.addEventListener('click', (e) => {
-    // hide our user interface that shows our A2HS button
-    // btnAdd.style.display = 'none';
-    // Show the prompt
-    console.log(deferredPrompt);
-    if (deferredPrompt !== undefined || deferredPrompt !== null) {
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        deferredPrompt.userChoice
-          .then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('User accepted the A2HS prompt');
-            } else {
-              console.log('User dismissed the A2HS prompt');
-            }
-            deferredPrompt = null;
-          });
-    }
-});
-=======
 //     console.log('Odpalamy!');
 //     //e.preventDefault();
 //     deferredPrompt = e;
 //     // Update UI notify the user they can add to home screen
 //     //offlineDiv.style.display = 'flex';
 // });
->>>>>>> 67be511635b510ce2bf7373b97c05dcdfd7fb5ae
 
 // btnAdd.addEventListener('click', (e) => {
 //     // hide our user interface that shows our A2HS button
