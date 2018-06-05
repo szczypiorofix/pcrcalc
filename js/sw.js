@@ -16,7 +16,6 @@ let offlineDiv = document.getElementById('offline-div');
 document.getElementById('offline-button-no').addEventListener('click', function (e) {
     offlineDiv.style.display = 'none';
 });
-// TO CO PONIŻEJ ZROBIĆ NA PROMISACH
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -26,8 +25,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 document.getElementById('offline-button-yes').addEventListener('click', (e) => {
     offlineDiv.style.display = 'none';
     deferredPrompt.prompt();
-    deferredPrompt.userChoice
-        .then((choiceResult) => {
+    deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
             console.log('OK. Instalujemy aplikację.');
         }
