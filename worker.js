@@ -15,7 +15,6 @@ var filesToCache     = [
     
     'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
     'https://fonts.googleapis.com/css?family=Lato|Raleway:200',
-    'https://www.gstatic.com/firebasejs/5.0.4/firebase.js',
 
     'icons/android-icon-36x36.png',
     'icons/android-icon-48x48.png',

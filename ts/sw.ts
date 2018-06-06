@@ -1,13 +1,15 @@
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
+
+// https://developers.google.com/web/fundamentals/codelabs/push-notifications/
+
+
+if ('serviceWorker' in navigator && 'PushManager' in window) {
         navigator.serviceWorker.register('./worker.js').then(function(registration) {
-            console.log('ServiceWorker registration successful.');
+            console.log('Service Worker is registered.');
         }, function(err) {
-            console.error('ServiceWorker registration failed: ', err);
+            console.error('Service Worker Error: ', err);
         });
-    });
 } else {
-    console.warn('Service Worker is not supported on this browser.')
+    console.warn('Push messaging is not supported');
 }
 
 let deferredPrompt;
