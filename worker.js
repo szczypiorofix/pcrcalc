@@ -92,9 +92,11 @@ self.addEventListener('notificationclick', function(e) {
     var primaryKey = notification.data.primaryKey;
     var action = e.action;
     if (action === 'close') {
+        console.log('Powiadomienie zamknięte przyciskiem na powiadomieniu');
         notification.close();
     } else {
         clients.openWindow('http://www.google.com');
+        console.log('Powiadomienie - przekierownanie...');
         notification.close();
     }
 });

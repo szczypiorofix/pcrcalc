@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- ################## APPLE ################## -->
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Firebase Database Quickstart">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
     <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
@@ -18,9 +25,20 @@
     <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">    
+
+    <!-- ################## MICROSOFT ################## -->
     <meta name="msapplication-TileColor" content="#303F9F">
     <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+    
+    <!-- ################## CHROME ################## -->
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Firebase Database Quickstart">
     <meta name="theme-color" content="#303F9F">
+    
     <title>PCR Master mix kalkulator</title>
     <!-- <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -178,6 +196,22 @@
         <button id="saveoffline" class="button-offline save" title="Zapisz w historii"><i class="fas fa-download"></i></button>
         <button id="loadoffline" class="button-offline load" title="Otwórz"><i class="fas fa-upload"></i></button>
     </div>
+ 
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyB1BW1x_rmxlkh8C32lNzQ3KKbKNielOr0",
+            authDomain: "mojefirebase.firebaseapp.com",
+            databaseURL: "https://mojefirebase.firebaseio.com",
+            projectId: "mojefirebase",
+            storageBucket: "mojefirebase.appspot.com",
+            messagingSenderId: "616477065162"
+        };
+        firebase.initializeApp(config);
+    </script>
 
     <script src="js/script.js"></script>
     <script src="js/sw.js"></script>
@@ -193,7 +227,7 @@
                     if (Notification.permission === 'denied') {
                         console.warn('Permission for notifications was denied');
                     } else {
-                        console.error('Unable to subscribe to push', e);
+                        console.error('Unable to subscribe to push.', e);
                     }
                 });
                 })
