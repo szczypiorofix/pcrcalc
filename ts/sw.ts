@@ -12,8 +12,10 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
     console.warn('Push messaging is not supported');
 }
 
+
 let deferredPrompt;
 let offlineDiv = document.getElementById('offline-div');
+
 
 // chrome://apps
 
