@@ -2,7 +2,7 @@
 
 const applicationServerPublicKey = 'BI_oS6NsOoR_GZJxUBwsOR0p6Vjz1kyPzwXBZVFzkNgY7OOPMMMyussbHHdR82oi2re4HCA8J4fAsDaCAoxOVEM';
 
-const pushButton = document.querySelector('.js-push-btn');
+//const pushButton = document.querySelector('.js-push-btn');
 
 let isSubscribed = false;
 let swRegistration = null;
@@ -77,6 +77,7 @@ function subscribeUser() {
 
 
 // https://developers.google.com/web/fundamentals/codelabs/push-notifications/
+
 function initializeUI() {
 
     document.getElementById("subscribeuser").addEventListener('click', function(e) {
@@ -104,11 +105,6 @@ function initializeUI() {
       //updateBtn();
     });
 }
-
-
-
-
-
 
 
 

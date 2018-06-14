@@ -1,6 +1,6 @@
 'use strict';
 const applicationServerPublicKey = 'BI_oS6NsOoR_GZJxUBwsOR0p6Vjz1kyPzwXBZVFzkNgY7OOPMMMyussbHHdR82oi2re4HCA8J4fAsDaCAoxOVEM';
-const pushButton = document.querySelector('.js-push-btn');
+//const pushButton = document.querySelector('.js-push-btn');
 let isSubscribed = false;
 let swRegistration = null;
 function urlB64ToUint8Array(base64String) {
@@ -15,6 +15,7 @@ function urlB64ToUint8Array(base64String) {
     }
     return outputArray;
 }
+// https://github.com/Minishlink/web-push-php-example/blob/master/src/send_push_notification.php
 function updateSubscriptionOnServer(subscription) {
     // TODO: Send subscription to application server
     const subscriptionJson = document.querySelector('.js-subscription-json');
