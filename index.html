@@ -62,7 +62,7 @@
                 <div class="left-side">
                     <div class="inputVolume">
                         <span class="diff">Objętość wejściowa:</span>
-                        <input type="number" id="inputMaxVolume" value="25">
+                        <input type="number" id="inputMaxVolume" value="25" min="0">
                     </div>      
                     <table>
                         <thead>
@@ -74,39 +74,39 @@
                         <tbody>
                             <tr>
                                 <td>H2O</td>
-                                <td><input type="number" id="inputH2O" value="14.7"></td>
+                                <td><input type="number" id="inputH2O" value="14.7" min="0"></td>
                             </tr>
                             <tr>
                                 <td>10 x Bufor</td>
-                                <td><input type="number" id="inputBuffer" value="1.75"></td>
+                                <td><input type="number" id="inputBuffer" value="1.75" min="0"></td>
                             </tr>
                             <tr>
                                 <td>Enhancer 5x</td>
-                                <td><input type="number" id="inputEnhancer" value="1.75"></td>
+                                <td><input type="number" id="inputEnhancer" value="1.75" min="0"></td>
                             </tr>
                             <tr>
                                 <td>MgCl2</td>
-                                <td><input type="number" id="inputMgCl2" value="2.5"></td>
+                                <td><input type="number" id="inputMgCl2" value="2.5" min="0"></td>
                             </tr>
                             <tr>
                                 <td>Starter 1 (5 mM)</td>
-                                <td><input type="number" id="inputPrimer1" value="0.5"></td>
+                                <td><input type="number" id="inputPrimer1" value="0.5" min="0"></td>
                             </tr>
                             <tr>
                                 <td>Starter 2 (5 mM)</td>
-                                <td><input type="number" id="inputPrimer2" value="0.5"></td>
+                                <td><input type="number" id="inputPrimer2" value="0.5" min="0"></td>
                             </tr>
                             <tr>
                                 <td>dNTPs</td>
-                                <td><input type="number" id="inputDNTPs" value="0.4"></td>
+                                <td><input type="number" id="inputDNTPs" value="0.4" min="0"></td>
                             </tr>
                             <tr>
                                 <td>polimeraza <i>Taq</i> 5u</td>
-                                <td><input type="number" id="inputPolymerase" value="0.4"></td>
+                                <td><input type="number" id="inputPolymerase" value="0.4" min="0"></td>
                             </tr>
                             <tr>
                                 <td>DNA</td>
-                                <td><input type="number" id="inputDNA" value="2.5"></td>
+                                <td><input type="number" id="inputDNA" value="2.5" min="0"></td>
                             </tr>
                             <tr>
                                 <td><span id="inputDifferenceText">OK</span></td>
@@ -119,7 +119,7 @@
                 <div class="right-side">
                     <div class="outputVolume">
                         <span class="diff">Objętość wyjściowa:</span>
-                        <input type="number" id="outputMaxVolume" value="25">
+                        <input type="number" id="outputMaxVolume" value="25" min="0">
                     </div>
                     <table>
                         <thead>
@@ -133,7 +133,7 @@
                             <tr>
                                 <td>PCR Mix</td>
                                 <td>1</td>
-                                <td><input type="number" id="numberOfProbes" value="16"></td>
+                                <td><input type="number" id="numberOfProbes" value="16" min="0"></td>
                             </tr>
                             <tr>
                                 <td>H2O</td>
