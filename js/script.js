@@ -358,12 +358,19 @@ class PCRCalc {
         this.recalc();
         this.addListener();
         var self = this;
+        var zeroValue = false;
         for (var property in this.inputFields) {
             if (this.inputFields.hasOwnProperty(property)) {
                 if (this.inputFields[property])
                     this.inputFields[property].addEventListener('input', function (event) {
-                        if (event.currentTarget.value === '')
+                        if (zeroValue) {
+                            event.currentTarget.value = event.currentTarget.value.substr(1);
+                            zeroValue = false;
+                        }
+                        if (event.currentTarget.value.length === 0) {
                             event.currentTarget.value = 0;
+                            zeroValue = true;
+                        }
                         self.recalc();
                     });
             }
