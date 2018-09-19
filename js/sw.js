@@ -1,6 +1,6 @@
 'use strict';
 
-const applicationServerPublicKey = 'BI_oS6NsOoR_GZJxUBwsOR0p6Vjz1kyPzwXBZVFzkNgY7OOPMMMyussbHHdR82oi2re4HCA8J4fAsDaCAoxOVEM';
+const applicationServerPublicKey = 'BBFHZo3DijlEGE0byr14vlAVVL28WUhc0wVdPcL8qiEHAb5Kg37mjMLCqavay73XDUosuZMeaOk1FTrqlIB33SM';
 const pushButton = document.querySelector('.js-push-btn');
 let isSubscribed = false;
 let swRegistration = null;
@@ -22,7 +22,7 @@ function urlB64ToUint8Array(base64String) {
 function updateSubscriptionOnServer(subscription) {
     // TODO: Send subscription to application server
     const subscriptionJson = document.querySelector('.js-subscription-json');
-    const subscriptionDetails = document.querySelector('.js-subscription-details');
+    //const subscriptionDetails = document.querySelector('.js-subscription-details');
     if (subscription) {
         subscriptionJson.textContent = JSON.stringify(subscription);
     }
@@ -41,7 +41,6 @@ function updateBtn() {
 }
 
 function subscribeUser() {
-    const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
     swRegistration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: applicationServerKey
@@ -112,33 +111,6 @@ function initializeUI() {
         //updateBtn();
     });
 }
-
-
-
-// function displayNotification() {
-//     if (Notification.permission == 'granted') {
-//         var notificationIcon = 'icons/favicon.png';
-//         navigator.serviceWorker.getRegistration().then(function(reg) {
-//         var options = {
-//             body: 'Here is a notification body!',
-//             icon: notificationIcon,
-//             vibrate: [100, 50, 100],
-//             data: {
-//                 dateOfArrival: Date.now(),
-//                 primaryKey: 1
-//             },
-//             actions: [
-//                 {action: 'explore', title: 'Explore this new world', icon: notificationIcon},
-//                 {action: 'close', title: 'Close notification', icon: notificationIcon},
-//             ]
-//         };
-//         reg.showNotification('Hello world!', options);
-//         });
-//     } else {
-//         console.warn('Brak uprawnień do wyświetlania powiadomień.');
-//     }
-// }
-
 
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     navigator.serviceWorker.register('./worker.js').then(function (registration) {

@@ -98,7 +98,6 @@ self.addEventListener('notificationclick', function(e) {
     if (action === 'update') {
         console.log('Aktaulizowanie aplikacji w toku ...');
         notification.close();
-        location.reload();
     } else {
         console.log('Anulowanie aktualizacji...');
         notification.close();
@@ -155,5 +154,16 @@ self.addEventListener('push', function(event) {
     // });
 
 
-    event.waitUntil(self.registration.showNotification(title, options));
+    event.waitUntil(
+        caches.open(cacheName).then(function(cache) {
+            return cache.match(event.request).then(function (response) {
+                return response || fetch(event.request).then(function(response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+            });
+            }).then(function(emails) {
+            self.registration.showNotification(title, options)
+        })
+    );
 });
