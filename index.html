@@ -36,11 +36,10 @@
     <!-- ################## CHROME ################## -->
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Firebase Database Quickstart">
+    <meta name="application-name" content="PCR Master mix kalkulator"> <!-- Firebase Database Quickstart" -->
     <meta name="theme-color" content="#303F9F">
     
     <title>PCR Master mix kalkulator</title>
-    <!-- <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
@@ -191,7 +190,7 @@
                 <button id="offline-button-no">NIE</button>
             </div>
         </div>
-<!--         
+        
         <button onclick="displayNotification();">PUSH</button>
         
 
@@ -217,35 +216,36 @@
               server keys on the site - so make sure they match.</p>
               <pre><code class="js-subscription-json"></code></pre>
             </section>
-        </main> -->
+        </main>
 
-        <!-- <button id="subscribeuser">Subscribe user</button> -->
+        <button id="subscribeuser" >Subscribe user</button>
         <button id="saveoffline" class="button-offline save" title="Zapisz w historii"><i class="fas fa-download"></i></button>
         <button id="loadoffline" class="button-offline load" title="Otwórz"><i class="fas fa-upload"></i></button>
     </div>
  
     <!-- ### SCRIPTS ### -->
-<!-- 
-    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script> -->
     
     <script>
         // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyB1BW1x_rmxlkh8C32lNzQ3KKbKNielOr0",
-            authDomain: "mojefirebase.firebaseapp.com",
-            databaseURL: "https://mojefirebase.firebaseio.com",
-            projectId: "mojefirebase",
-            storageBucket: "mojefirebase.appspot.com",
-            messagingSenderId: "616477065162"
-        };
-        firebase.initializeApp(config);
-    </script> -->
+        // var config = {
+        //     apiKey: "AIzaSyB1BW1x_rmxlkh8C32lNzQ3KKbKNielOr0",
+        //     authDomain: "mojefirebase.firebaseapp.com",
+        //     databaseURL: "https://mojefirebase.firebaseio.com",
+        //     projectId: "mojefirebase",
+        //     storageBucket: "mojefirebase.appspot.com",
+        //     messagingSenderId: "616477065162"
+        // };
+        // firebase.initializeApp(config);
+    </script>
 
     <script src="js/script.js"></script>
     <script src="js/sw.js"></script>
 
     <script>
         // function subscribeUser() {
+        //     console.log("User subscribe...");
         //     if ('serviceWorker' in navigator) {
         //         navigator.serviceWorker.ready
         //         .then(function(reg) {

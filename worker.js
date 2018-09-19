@@ -5,8 +5,8 @@ var filesToCache     = [
     'manifest.json',
     'browserconfig.xml',
 
-    'js/pwa.js',
-    'js/pwa.js.map',
+    'js/sw.js',
+    'js/sw.js.map',
     'js/script.js',
     'js/script.js.map',
 
@@ -118,9 +118,9 @@ self.addEventListener('push', function(event) {
   
     const title = 'Push Codelab';
     const options = {
-      body: 'Yay it works.',
-      icon: 'images/icon.png',
-      badge: 'images/badge.png'
+      body: 'Pojawiła się nowa wersja programu!.',
+      icon: 'icons/favicon.png',
+      badge: 'icons/favicon.png'
     };
   
     event.waitUntil(self.registration.showNotification(title, options));

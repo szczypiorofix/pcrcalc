@@ -363,14 +363,16 @@ class PCRCalc {
             if (this.inputFields.hasOwnProperty(property)) {
                 if (this.inputFields[property])
                     this.inputFields[property].addEventListener('input', function (event) {
-                        if (zeroValue) {
-                            event.currentTarget.value = event.currentTarget.value.substr(1);
-                            zeroValue = false;
-                        }
-                        if (event.currentTarget.value.length === 0) {
-                            event.currentTarget.value = 0;
-                            zeroValue = true;
-                        }
+                        // if (zeroValue) {
+                        //     event.currentTarget.value = event.currentTarget.value.substr(1);
+                        //     zeroValue = false;
+                        //     this.focus();
+                        // }
+                        // if (event.currentTarget.value.length === 0) {
+                        //     event.currentTarget.value ='';
+                        //     event.currentTarget.value = 0;
+                        //     zeroValue = true;
+                        // }
                         self.recalc();
                     });
             }

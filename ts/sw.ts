@@ -2,10 +2,11 @@
 
 const applicationServerPublicKey = 'BI_oS6NsOoR_GZJxUBwsOR0p6Vjz1kyPzwXBZVFzkNgY7OOPMMMyussbHHdR82oi2re4HCA8J4fAsDaCAoxOVEM';
 
-//const pushButton = document.querySelector('.js-push-btn');
+const pushButton = document.querySelector('.js-push-btn');
 
 let isSubscribed = false;
 let swRegistration = null;
+
 
 function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -85,7 +86,7 @@ function initializeUI() {
         if (isSubscribed) {
         // TODO: Unsubscribe user
         } else {
-        subscribeUser();
+            subscribeUser();
         }
     });
 
@@ -112,7 +113,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
         navigator.serviceWorker.register('./worker.js').then(function(registration) {
             console.log('Service Worker is registered.');
             swRegistration = registration;
-            //initializeUI();
+            initializeUI();
         }, function(err) {
             console.error('Service Worker Error: ', err);
         });
