@@ -1,5 +1,6 @@
 var cacheName = "PCR-CALC-0.00.001";
-var filesToCache     = [
+
+var filesToCache = [
     'index.html',
     
     'manifest.json',
@@ -42,6 +43,7 @@ var filesToCache     = [
     'icons/ms-icon-150x150.png',
     'icons/ms-icon-310x310.png'
 ];
+
 
 self.addEventListener('activate', function(e) {
     console.log('[ServiceWorker] Activate');
@@ -89,22 +91,23 @@ self.addEventListener('install', function(e) {
   
 self.addEventListener('notificationclick', function(e) {
     var notification = e.notification;
-    var primaryKey = notification.data.primaryKey;
+    console.log(e);
+    cacheName = e.notification.data.version;
+    console.log("Cache Name: "+cacheName);
     var action = e.action;
-    if (action === 'close') {
-        console.log('Powiadomienie zamknięte przyciskiem na powiadomieniu');
+    if (action === 'update') {
+        console.log('Aktaulizowanie aplikacji w toku ...');
         notification.close();
+        location.reload();
     } else {
-        clients.openWindow('http://www.google.com');
-        console.log('Powiadomienie - przekierownanie...');
+        console.log('Anulowanie aktualizacji...');
         notification.close();
     }
 });
 
 self.addEventListener('notificationclose', function(e) {
-    var notification = e.notification;
-    var primaryKey = notification.data.primaryKey;
-    console.log('Closed notification: ' + primaryKey);
+    console.log('Closed notification.');
+    console.log(e.notification);
 });
 
 self.addEventListener('sync', function(e) {
@@ -116,12 +119,41 @@ self.addEventListener('push', function(event) {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
   
-    const title = 'Push Codelab';
+    const title = 'PCR Calc';
+    const notificationIcon = 'icons/favicon.png';
     const options = {
-      body: 'Pojawiła się nowa wersja programu!.',
-      icon: 'icons/favicon.png',
-      badge: 'icons/favicon.png'
+        body: 'Jest dostępna nowa wersja aplikacji. Zaktualizować teraz?',
+        icon: notificationIcon,
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            version: "PCR-CALC-0.00.002"
+        },
+        actions: [
+            {action: 'update', title: 'Aktualizacja', icon: notificationIcon},
+            {action: 'cancel', title: 'Zamknij', icon: notificationIcon},
+        ]
     };
   
+
+    // var notificationIcon = 'icons/favicon.png';
+    // navigator.serviceWorker.getRegistration().then(function(reg) {
+    // var options = {
+    //     body: 'Here is a notification body!',
+    //     icon: notificationIcon,
+    //     vibrate: [100, 50, 100],
+    //     data: {
+    //     dateOfArrival: Date.now(),
+    //     primaryKey: 1
+    //     },
+    //     actions: [
+    //         {action: 'explore', title: 'Explore this new world', icon: notificationIcon},
+    //         {action: 'close', title: 'Close notification', icon: notificationIcon},
+    //     ]
+    // };
+    // reg.showNotification('Hello world!', options);
+    // });
+
+
     event.waitUntil(self.registration.showNotification(title, options));
 });
