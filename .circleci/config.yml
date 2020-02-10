@@ -1,7 +1,7 @@
 version: 2
 jobs:
    build:
-    docker:
+     docker:
        - image: circleci/node:latest
      steps:
        - checkout
@@ -13,11 +13,11 @@ jobs:
           paths:
            - ./node_modules
        - run: git log --oneline --decorate > public/changelog.txt
+       - run: npm run format
        - run: npm run lint
        - run: npm run build
        - run: npm test
        - run: node deploy.js
-
 
 workflows:
   version: 2
