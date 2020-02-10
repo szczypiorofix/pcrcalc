@@ -1,0 +1,30 @@
+version: 2
+jobs:
+   build:
+    docker:
+       - image: circleci/node:latest
+     steps:
+       - checkout
+       - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+       - run: npm install
+       - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+           - ./node_modules
+       - run: git log --oneline --decorate > public/changelog.txt
+       - run: npm run lint
+       - run: npm run build
+       - run: npm test
+       - run: node deploy.js
+
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+               - master
