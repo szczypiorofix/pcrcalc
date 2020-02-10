@@ -10,7 +10,7 @@ PCR Master mix calculator.
 [![CircleCI](https://circleci.com/gh/szczypiorofix/pcrcalc/tree/master.svg?style=svg)](https://circleci.com/gh/szczypiorofix/pcrcalc/tree/master)
 
 
-## Installing & Running & Building
+## Install, Run, Buid
 - ```npm install```
 - ```npm start```
 - ```npm run build```
