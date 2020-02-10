@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.fontFamily": "Noto Mono, monospace",
+		"editor.lineHeight": 16,
+		"editor.fontLigatures": true,
+		"editor.mouseWheelZoom": true,
+		"editor.cursorWidth": 8,
+		"editor.cursorBlinking": "phase",
+		"files.autoGuessEncoding": false,
+		"files.encoding": "utf8",
+		"tslint.configFile": "./tslint.json",
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/node_modules": true
+		}
+	}
+}

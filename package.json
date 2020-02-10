@@ -1,0 +1,49 @@
+{
+  "name": "pcrcalc",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
+    "node-sass": "^4.13.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.26",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\" && prettier --write \"src/**/*.tsx\" \"src/**/*.js\"",
+    "lint": "tslint --project ./tsconfig.json"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
