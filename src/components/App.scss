@@ -12,6 +12,61 @@ body {
 }
 
 
+@mixin boxShadow() {
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+}
+
+
+.reagents-main {
+  display: flex;
+  flex-direction: row;
+
+  div.left-part {
+    width: 50%;
+    margin: 0 auto;
+    border-right: 2px solid red;
+  }
+
+  table {
+    width: 100%;
+    padding: 10px 0;
+    thead {
+      background-color: lightseagreen;
+      
+      tr {
+        height: 60px;
+      }
+    }
+    td {
+      padding: 5px;
+      height: 35px;
+    }
+    input {
+      outline: none;
+      padding: 5px;
+      border: 3px solid lightslategray;
+      border-radius: 4px;
+      &:active, &:focus {
+        border: 3px solid red;
+        @include boxShadow();
+      }
+    }
+  }
+
+  div.right-part {
+    width: 50%;
+    margin: 0 auto;
+
+    table thead tr th p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+
 .App-header {
   background-color: #282c34;
   // min-height: 100vh;
