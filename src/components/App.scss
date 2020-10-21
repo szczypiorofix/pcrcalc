@@ -1,27 +1,337 @@
 
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap&subset=latin-ext');
 
-body {
+
+$charcoal: #264653ff;
+$persian-green: #2a9d8fff;
+$orange-yellow-crayola: #e9c46aff;
+$sandy-brown: #f4a261ff;
+$burnt-sienna: #e76f51ff;
+$primary-text-color: #fafafa;
+
+
+// Breakpoints
+$breakpoints: (phone: 640px, 
+               tablet: 768px, 
+               desktop: 1024px) !default;
+
+$widthDektopMin: 1280px;
+$widthTabletMax: 1279px;
+$widthTabletMin: 600px;
+$widthMobileMax: 599px;
+// Mobile first !
+@media only screen and (min-width: $widthDektopMin) {
+  // flex-direction: row;
+}
+
+
+// Box shadows
+@mixin boxShadow1() {
+  -webkit-box-shadow: 3px 3px 8px 0px rgba(64,64,64,0.5);
+  -moz-box-shadow:    3px 3px 8px 0px rgba(64,64,64,0.5);
+  box-shadow:         3px 3px 8px 0px rgba(64,64,64,0.5);
+}
+
+@mixin boxShadow2() {
+  -webkit-box-shadow: 3px 3px 8px 0px rgba(64,64,64,0.75);
+  -moz-box-shadow:    3px 3px 8px 0px rgba(64,64,64,0.75);
+  box-shadow:         3px 3px 8px 0px rgba(64,64,64,0.75);
+}
+
+@mixin boxShadow3() {
+  -webkit-box-shadow: 3px 3px 8px 1px rgba(64,64,64,0.9);
+  -moz-box-shadow:    3px 3px 8px 1px rgba(64,64,64,0.9);
+  box-shadow:         3px 3px 8px 1px rgba(64,64,64,0.9);
+}
+
+
+html, body {
   margin: 0;
   font-family: 'Lato', sans-serif;
+  font-size: 18px;
+
+  div.App {
+    text-align: center;
+
+    // header.App-header {
+    //   background-color: $charcoal;
+    //   color: $orange-yellow-crayola;
+    //   font-weight: 100;
+    //   padding: 25px;
+    // }
+
+    div.main-part {      
+      padding: 12px 0;
+
+      div.tables {
+
+        // grid
+        .grid-container {
+          background-color: $orange-yellow-crayola;
+          width: 100%;
+          max-width: 450px;
+          display: grid;
+          color: $charcoal;
+          $colHeight: 44px;
+          $headerheight: 40px;
+          $colWidth: 33.334%;
+
+          grid-template-columns: $colWidth $colWidth $colWidth;
+          grid-template-rows: 46px $headerheight $headerheight $headerheight $headerheight 6px $colHeight $colHeight $colHeight $colHeight $colHeight $colHeight $colHeight $colHeight $colHeight $colHeight;
+          gap: 0px 0px;
+          border-collapse: collapse;
+          border-radius: 2px;
+          border: 2px solid $persian-green;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          font-weight: bold;
+          grid-template-areas:
+            "header header header"
+            "title vol-in-name vol-out-name"
+            "title vol-in-input vol-out-input"
+            "reagent-name for-1-probe-name probe-amount-name"
+            "reagent-name for-1-probe-name probe-amount-input"
+            "divider1 divider2 divider3"
+            "water-name water-input water-result"
+            "buffer-name buffer-input buffer-result"
+            "enhancer-name enhancer-input enhancer-result"
+            "primer1-name primer1-input primer1-result"
+            "primer2-name primer2-input primer2-result"
+            "polymerase-name polymerase-input polymerase-result"
+            "dntps-name dntps-input dntps-result"
+            "mgcl2-name mgcl2-input mgcl2-result"
+            "dna-name dna-input dna-result"
+            "info difference action-button";
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            vertical-align: middle;
+            line-height: normal;
+
+            & > div {
+              vertical-align: middle;
+              margin: auto 0;
+            }
+
+            div.app-header {
+              grid-area: header;
+              background-color: $charcoal;
+              color: $orange-yellow-crayola;
+              font-weight: 100;
+              font-size: 34px;
+              height: 100%;
+              vertical-align: middle;
+              line-height: 50px;
+              width: 100%;
+            }
+
+            .divider1 {
+              border-bottom: 2px solid $persian-green;
+            }
+    
+            .divider2 {
+              border-bottom: 2px solid $persian-green;
+            }
+    
+            .divider3 {
+              border-bottom: 2px solid $persian-green;
+            }
+    
+            .vol-in-name {
+              grid-area: vol-in-name;
+            }
+            
+            .vol-out-name {
+              grid-area: vol-out-name;
+            }
+            
+            .vol-in-input {
+              grid-area: vol-in-input;
+            }
+            
+            .vol-out-input {
+              grid-area: vol-out-input;
+            }
+            
+            .title {
+              grid-area: title;
+            }
+            
+            .reagent-name {
+              grid-area: reagent-name;
+            }
+            
+            .for-1-probe-name {
+              grid-area: for-1-probe-name;
+            }
+            
+            .probe-amount-name {
+              grid-area: probe-amount-name;
+              
+            }
+            
+            .probe-amount-input {
+              grid-area: probe-amount-input;
+            }
+            
+            .water-name {
+              grid-area: water-name;
+            }
+            
+            .buffer-name {
+              grid-area: buffer-name;
+            }
+            
+            .enhancer-name {
+              grid-area: enhancer-name;
+            }
+            
+            .primer1-name {
+              grid-area: primer1-name;
+            }
+            
+            .primer2-name {
+              grid-area: primer2-name;
+            }
+            
+            .polymerase-name {
+              grid-area: polymerase-name;
+            }
+            
+            .dntps-name {
+              grid-area: dntps-name;
+            }
+            
+            .mgcl2-name {
+              grid-area: mgcl2-name;
+            }
+            
+            .dna-name {
+              grid-area: dna-name;
+            }
+            
+            .info {
+              grid-area: info;
+              height: 100%;
+              border-top: 2px solid $persian-green;
+              div {
+                margin: 10px 0;
+              }
+            }
+            
+            .water-input {
+              grid-area: water-input;
+            }
+            
+            .buffer-input {
+              grid-area: buffer-input;
+            }
+            
+            .enhancer-input {
+              grid-area: enhancer-input;
+            }
+            
+            .primer1-input {
+              grid-area: primer1-input;
+            }
+            
+            .primer2-input {
+              grid-area: primer2-input;
+            }
+            
+            .polymerase-input {
+              grid-area: polymerase-input;
+            }
+            
+            .dntps-input {
+              grid-area: dntps-input;
+            }
+            
+            .mgcl2-input {
+              grid-area: mgcl2-input;
+            }
+            
+            .dna-input {
+              grid-area: dna-input;
+            }
+            
+            .difference {
+              grid-area: difference;
+              border-top: 2px solid $persian-green;
+              height: 100%;
+              div {
+                margin: 10px 0;
+              }
+            }
+            
+            .water-result {
+              grid-area: water-result;
+            }
+            
+            .buffer-result {
+              grid-area: buffer-result;
+            }
+            
+            .enhancer-result {
+              grid-area: enhancer-result;
+            }
+            
+            .primer1-result {
+              grid-area: primer1-result;
+            }
+            
+            .primer2-result {
+              grid-area: primer2-result;
+            }
+            
+            .polymerase-result {
+              grid-area: polymerase-result;
+            }
+            
+            .dntps-result {
+              grid-area: dntps-result;
+            }
+            
+            .mgcl2-result {
+              grid-area: mgcl2-result;
+            }
+            
+            .dna-result {
+              grid-area: dna-result;
+            }
+            
+            div.action-button {
+              grid-area: action-button;
+              border-top: 2px solid $persian-green;
+              height: 100%;
+              div {
+               margin: 1% 0;
+              }
+              button.btn {
+                background-color: $charcoal;
+                border: none;
+                color: $primary-text-color;
+                padding: 10px 18px;
+                font-size: 16px;
+                outline: none;
+                cursor: pointer;
+              }
+              button.btn:hover {
+                background-color: $sandy-brown;
+              }
+            }
+            
+            input {
+              padding: 6px;
+              outline: none;
+              border: 1px solid $persian-green;
+              border-radius: 2px;
+              text-align: center;
+              width: 120px;
+            }
+        }
+      }
+    }
+  }
 }
-
-
-.App {
-  text-align: center;
-}
-
-
-.App-header {
-  background-color: #282c34;
-  // min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // font-size: 5em;
-  font-weight: 100;
-  color: white;
-}
-
-

@@ -4,4 +4,4 @@
 // learn more: https://github.com/testing-library/jest-dom
 
 // tslint:disable-next-line: no-submodule-imports
-import '@testing-library/jest-dom/extend-expect';
+import "@testing-library/jest-dom/extend-expect";
