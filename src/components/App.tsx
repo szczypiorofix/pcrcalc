@@ -472,8 +472,7 @@ export default class App extends React.Component<{}, IReagents> {
               <div className="dna-result">-</div>
               <div className="action-button">
                 <div>
-                  {/* <button className="btn"><i className="fa fa-bars"></i> Menu</button> */}
-                  <button className="btn"><FontAwesomeIcon icon={faBars} /> Menu</button>
+                  <button className="btn"><FontAwesomeIcon icon={ faBars } /> Menu</button>
                 </div>
               </div>
             </div>
