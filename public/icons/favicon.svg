@@ -1,77 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 744.09448819 1052.3622047"
-   id="svg2"
-   version="1.1"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:export-ydpi="119.52634"
+   inkscape:export-xdpi="119.52634"
+   inkscape:export-filename="D:\workshop\htdocs\pcrcalc\public\icons\logo.png"
    sodipodi:docname="favicon.svg"
-   inkscape:export-filename="C:\workshop\htdocs\pcrcalc-backup\old\icons\logo.png"
-   inkscape:export-xdpi="117.70535"
-   inkscape:export-ydpi="117.70535">
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 744.09448819 1052.3622047"
+   height="297mm"
+   width="210mm">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient850"
+       inkscape:collect="always">
+      <stop
+         id="stop846"
+         offset="0"
+         style="stop-color:#80e5ff;stop-opacity:1;" />
+      <stop
+         id="stop848"
+         offset="1"
+         style="stop-color:#80e5ff;stop-opacity:0;" />
+    </linearGradient>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       id="filter4264"
        inkscape:label="Drop Shadow"
-       id="filter4264">
+       style="color-interpolation-filters:sRGB;">
       <feFlood
-         flood-opacity="0.498039"
-         flood-color="rgb(0,0,0)"
+         id="feFlood4266"
          result="flood"
-         id="feFlood4266" />
+         flood-color="rgb(0,0,0)"
+         flood-opacity="0.498039" />
       <feComposite
-         in="flood"
-         in2="SourceGraphic"
-         operator="in"
+         id="feComposite4268"
          result="composite1"
-         id="feComposite4268" />
+         operator="in"
+         in2="SourceGraphic"
+         in="flood" />
       <feGaussianBlur
-         in="composite1"
-         stdDeviation="1.6"
+         id="feGaussianBlur4270"
          result="blur"
-         id="feGaussianBlur4270" />
+         stdDeviation="1.6"
+         in="composite1" />
       <feOffset
-         dx="7.6"
-         dy="6.51042"
+         id="feOffset4272"
          result="offset"
-         id="feOffset4272" />
+         dy="6.51042"
+         dx="7.6" />
       <feComposite
-         in="SourceGraphic"
-         in2="offset"
-         operator="over"
+         id="feComposite4274"
          result="composite2"
-         id="feComposite4274" />
+         operator="over"
+         in2="offset"
+         in="SourceGraphic" />
     </filter>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="488.35876"
+       x2="512.67982"
+       y1="488.35876"
+       x1="229.22722"
+       id="linearGradient852"
+       xlink:href="#linearGradient850"
+       inkscape:collect="always" />
   </defs>
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.70003571"
-     inkscape:cx="382.70173"
-     inkscape:cy="635.02346"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:snap-text-baseline="false"
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:window-height="1001"
+     inkscape:window-width="1920"
      showgrid="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="962"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:cy="635.02346"
+     inkscape:cx="-97.988034"
+     inkscape:zoom="0.70003571"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -80,47 +102,35 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
+     id="layer1"
      inkscape:groupmode="layer"
-     id="layer1">
+     inkscape:label="Layer 1">
     <rect
-       style="opacity:1;fill:#4b11de;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4138"
-       width="376.48605"
-       height="376.48605"
-       x="184.35722"
-       y="337.93808"
-       ry="17.141983"
+       inkscape:export-ydpi="114.94662"
        inkscape:export-xdpi="114.94662"
-       inkscape:export-ydpi="114.94662" />
+       ry="17.141983"
+       y="327.22433"
+       x="160.25131"
+       height="376.48605"
+       width="376.48605"
+       id="rect4138"
+       style="opacity:1;fill:#2b3474;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:15;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.16342163px;line-height:1.25;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cbff1f;fill-opacity:1;stroke:none;stroke-width:2.25409532;"
-       x="277.58109"
-       y="602.85809"
-       id="text3726"
-       transform="scale(0.96439744,1.0369169)"><tspan
-         sodipodi:role="line"
-         id="tspan3724"
-         x="277.58109"
-         y="602.85809"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.16342163px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#cbff1f;stroke-width:2.25409532;stroke:none;fill-opacity:1;">calc</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:197.07191467px;line-height:1.25;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cbff1f;fill-opacity:1;stroke:none;stroke-width:4.92696047;"
-       x="203.25414"
-       y="498.04617"
+       transform="scale(0.96439744,1.0369169)"
        id="text3730"
-       transform="scale(0.96439744,1.0369169)"><tspan
-         sodipodi:role="line"
+       y="556.30237"
+       x="194.33728"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:190.224px;line-height:1.25;font-family:'Noto Mono';-inkscape-font-specification:'Noto Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffe680;fill-opacity:1;stroke:#9689cc;stroke-width:3.22766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:190.224px;font-family:'Noto Mono';-inkscape-font-specification:'Noto Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffe680;fill-opacity:1;stroke:#9689cc;stroke-width:3.22766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         y="556.30237"
+         x="194.33728"
          id="tspan3728"
-         x="203.25414"
-         y="498.04617"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:197.07191467px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#cbff1f;stroke-width:4.92696047;stroke:none;fill-opacity:1;">PCR</tspan></text>
+         sodipodi:role="line">PCR</tspan></text>
   </g>
 </svg>
