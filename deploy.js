@@ -8,7 +8,7 @@ var reactAppConfig = {
     port: 21,
     localRoot: __dirname + "/build/",
     remoteRoot: '/public_html/',
-    deleteRemote: false,
+    deleteRemote: true,
     include: ['*']
 }
 
