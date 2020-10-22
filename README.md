@@ -14,7 +14,7 @@ How it works?:
 
 
 ## Website
-[https://pcr.wroblewskipiotr.pl]([https://pcr.wroblewskipiotr.pl/)
+[https://pcr.wroblewskipiotr.pl]([https://pcr.wroblewskipiotr.pl)
 
 
 ## Last build
