@@ -14,7 +14,7 @@ How it works?:
 
 
 ## Website
-Link: [PCR]([https://wroblewskipiotr.pl)
+Visit https://pcr.wroblewskipiotr.pl
 
 
 ## Last build
