@@ -56,6 +56,66 @@ html, body {
     div.main-part {      
       padding: 12px 0;
 
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 6px;
+        border: 1px solid #888;
+        width: 80%;
+
+        .modal-main {
+          background-color: $orange-yellow-crayola;
+
+          ul {
+            list-style-type: none;
+            padding-bottom: 20px;
+            margin: 0;
+          }
+
+          div.modal-title {
+            padding: 20px 16px;
+            font-weight: bold;
+            border-bottom: 2px solid $persian-green
+          }
+
+          div.modal-list {
+            padding: 20px;
+          }
+        }
+
+      }
+
+      .close {
+        color: $charcoal;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin: 4px;
+        border: 3px solid $sandy-brown;
+        border-radius: 2px;
+        padding: 0 8px;
+
+        &:hover, &:focus {
+          color: $sandy-brown;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+
       div.tables {
 
         .grid-container {

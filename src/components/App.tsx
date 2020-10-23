@@ -10,6 +10,7 @@ export default class App extends React.Component<{}, IReagents> {
   private inputDefaultValues: IEntryReagents;
   private outputDefaultValues: IOutputReagents;
   private storageObject: IStorageObject;
+  private modalRef: any;
 
   constructor(props: any) {
     super(props);
@@ -54,6 +55,8 @@ export default class App extends React.Component<{}, IReagents> {
       odNTPsVolumeForOne: 0,
     };
     // ================================================================ //
+
+    this.modalRef = React.createRef();
 
     this.storageObject = {
       id: 0,
@@ -198,7 +201,30 @@ export default class App extends React.Component<{}, IReagents> {
         <div className="main-part">
           {/* <div>
           <button onClick={ () => this.saveToStorage(true) }>Reset values</button>
-        </div> */}
+          </div> */}
+          
+          <div ref={ this.modalRef } className="modal">
+
+            <div className="modal-content">
+              <span className="close" onClick={
+                (e) => {
+                  this.modalRef.current.style.display = "none";
+                }
+              }>&times;</span>
+              <div className="modal-main">
+                <div className="modal-title">Ustawienia</div>
+                <div className="modal-list">Lista zapisanych reakcji:</div>
+                <ul>
+                  <li>1. zapis 1</li>
+                  <li>2. zapis 2</li>
+                  <li>3. zapis 3</li>
+                  <li>4. zapis 4</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
           <div className="tables">
             <div className="grid-container">
               <div className="app-header">PCR Master Mix Kalkulator</div>
@@ -472,7 +498,11 @@ export default class App extends React.Component<{}, IReagents> {
               <div className="dna-result">-</div>
               <div className="action-button">
                 <div>
-                  <button className="btn"><FontAwesomeIcon icon={ faBars } /> Menu</button>
+                  <button className="btn" onClick={ (e) => {
+                    console.log("OK!");
+                    
+                    this.modalRef.current.style.display = "block";
+                  } }><FontAwesomeIcon icon={ faBars } /> Menu</button>
                 </div>
               </div>
             </div>
