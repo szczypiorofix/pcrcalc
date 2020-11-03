@@ -1,8 +1,3 @@
-export interface IPCRMix {
-  email: string;
-  password: string;
-  uuid: string;
-}
 
 export interface IEntryReagents {
   iMasterMixInputVolume: number;
@@ -52,6 +47,19 @@ export interface IReagents {
 
 export interface IStorageObject {
   id: number;
+  date: string; // timestamp
+  name: string;
   inputReagents: IEntryReagents;
   outputReagents: IOutputReagents;
+}
+
+export interface ISavedDataObject {
+  saved: IStorageObject[];
+  lastId: number;
+}
+
+export interface ISettings {
+  updateDate: string; // timestamp
+  verMaj: number;
+  verMin: number;
 }
