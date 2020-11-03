@@ -1,16 +1,25 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react";
-import { IEntryReagents, IOutputReagents, IReagents, IStorageObject } from "../models";
+import { IEntryReagents, IOutputReagents, IReagents, ISavedDataObject, ISettings, IStorageObject } from "../models";
 import "./App.scss";
 
-const localStorageDataName: string = "PCRCalcValues";
+
+const localStorageCurrentDataName: string = "PCRCalcCurrentValues";
+const localStorageSavedDataName: string = "PCRCalcSavedValues";
+const localStorageSettingsName: string = "PCRCalcSettings";
+
+const defaultSavedReactionName: string = "default_name";
+
 
 export default class App extends React.Component<{}, IReagents> {
   private inputDefaultValues: IEntryReagents;
   private outputDefaultValues: IOutputReagents;
   private storageObject: IStorageObject;
+  private savedObjects: ISavedDataObject;
   private modalRef: any;
+  private lastId: number;
+  private settings: ISettings;
 
   constructor(props: any) {
     super(props);
@@ -54,24 +63,66 @@ export default class App extends React.Component<{}, IReagents> {
       odNTPsVolumeForAll: 0,
       odNTPsVolumeForOne: 0,
     };
+
+    // Version to check for updates
+    this.settings = {
+      updateDate: Date.now().toString(),
+      verMaj: 0,
+      verMin: 5
+    };
+
     // ================================================================ //
 
     this.modalRef = React.createRef();
 
+    this.lastId = 0;
+
     this.storageObject = {
       id: 0,
+      date: Date.now().toString(), // timestamp
+      name: defaultSavedReactionName,
       inputReagents: this.inputDefaultValues,
       outputReagents: this.outputDefaultValues,
     };
 
+    this.savedObjects = {
+      saved: [],
+      lastId: 0
+    };
+
     if (typeof Storage !== "undefined") {
-      const str: string =
-        localStorage.getItem(localStorageDataName) ||
-        JSON.stringify({ inputReagents: this.inputDefaultValues, outputReagents: this.outputDefaultValues });
-      const dataFromStorage: IStorageObject | null = JSON.parse(str);
+      
+
+      // Current object
+      const currentObjectString: string = localStorage.getItem(localStorageCurrentDataName) || JSON.stringify({ inputReagents: this.inputDefaultValues, outputReagents: this.outputDefaultValues });
+      const dataFromStorage: IStorageObject | null = JSON.parse(currentObjectString);
       if (dataFromStorage !== null) {
         this.storageObject = dataFromStorage;
       }
+
+      // Saved object in localStorage
+      const savedObjectsString: string = localStorage.getItem(localStorageSavedDataName) || JSON.stringify({saved: [], lastId: 0});
+      const savedDataFromStorage: ISavedDataObject | null = JSON.parse(savedObjectsString);
+      if (savedDataFromStorage !== null) {
+        this.savedObjects = savedDataFromStorage;
+        this.lastId = savedDataFromStorage.lastId;
+        localStorage.setItem(localStorageSavedDataName, JSON.stringify( savedDataFromStorage ));
+      }
+
+      // Settings saved in localStorage
+      const settingsString: string = localStorage.getItem(localStorageSettingsName) || JSON.stringify( this.settings );
+      const settingsFromStorage: ISettings | null = JSON.parse(settingsString);
+      
+      // sprawdzenie czy wersja apki jest nowsza niż to co w localStorage, jeśli tak to czyszczenie localStorage i wprowadzanie domyślnych wartości
+      
+      if (settingsFromStorage !== null) {
+        this.settings = settingsFromStorage;
+        localStorage.setItem(localStorageSettingsName, JSON.stringify( settingsFromStorage ));
+      }
+
+      // console.log(this.savedObjects);
+
+
     } else {
       console.error("Ta przeglądarka nie obsługuje localStorage!");
     }
@@ -169,17 +220,16 @@ export default class App extends React.Component<{}, IReagents> {
         },
       },
       () => {
-        this.saveToStorage();
+        this.saveCurrentToStorage();
       },
     );
   }
 
-  public saveToStorage(reset: boolean = false) {
+  public saveCurrentToStorage(reset: boolean = false) {
     this.storageObject.inputReagents = this.state.inputReagents;
     this.storageObject.outputReagents = this.state.outputReagents;
-    this.storageObject.id += 1;
+    this.storageObject.date = Date.now().toString(); // timestamp
     if (reset) {
-      this.storageObject.id = 0;
       this.storageObject.inputReagents = this.inputDefaultValues;
       this.storageObject.outputReagents = this.outputDefaultValues;
       this.setState({
@@ -188,38 +238,109 @@ export default class App extends React.Component<{}, IReagents> {
       });
     }
     console.log("Zapisywanie do localStorage...");
-    localStorage.setItem(localStorageDataName, JSON.stringify(this.storageObject));
+    localStorage.setItem(localStorageCurrentDataName, JSON.stringify(this.storageObject));
   }
 
   public componentDidMount() {
     this.onInputChange();
   }
 
+  public timeConverter(timestamp: string){
+    const t = parseInt(timestamp, 10);
+    const a = new Date(t);
+    const year = a.getFullYear();
+    const months = ['Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paź','Lis','Gru'];
+    const month = months[a.getMonth()];
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes();
+    const sec = a.getSeconds();
+    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    return time;
+  }
+
   public render(): JSX.Element {
     return (
       <div className="App">
         <div className="main-part">
-          {/* <div>
-          <button onClick={ () => this.saveToStorage(true) }>Reset values</button>
-          </div> */}
           
           <div ref={ this.modalRef } className="modal">
 
             <div className="modal-content">
-              <span className="close" onClick={
-                (e) => {
-                  this.modalRef.current.style.display = "none";
-                }
-              }>&times;</span>
               <div className="modal-main">
-                <div className="modal-title">Ustawienia</div>
-                <div className="modal-list">Lista zapisanych reakcji:</div>
-                <ul>
-                  <li>1. zapis 1</li>
-                  <li>2. zapis 2</li>
-                  <li>3. zapis 3</li>
-                  <li>4. zapis 4</li>
-                </ul>
+                <div className="modal-title">
+                  <span className="title">Lista zapisanych reakcji:</span>
+                  <span className="close" onClick={
+                  (e) => {
+                    this.modalRef.current.style.display = "none";
+                  }
+                }>&times;</span>
+                </div>
+                <div>
+                  <button className="add-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => { 
+                      // console.log("Dodano do zapisanych.");
+
+                      const sTemp: string | null = localStorage.getItem( localStorageSavedDataName ) || JSON.stringify( { saved: [] });
+                      const temp: ISavedDataObject  = JSON.parse(sTemp);
+
+                      const tName: string | null = prompt("Nazwa reakcji");
+
+                      if (tName) {
+
+                        this.lastId++; // increase id number
+
+                        const tempStorage: IStorageObject = {
+                          id: this.lastId,
+                          date: Date.now().toString(), // timestamp
+                          name: tName,
+                          inputReagents: this.state.inputReagents,
+                          outputReagents: this.state.outputReagents
+                        }
+
+                        temp.saved.push(tempStorage);
+                        temp.lastId = this.lastId;
+                        this.savedObjects.saved.push(tempStorage);
+                        this.forceUpdate();
+                        localStorage.setItem(localStorageSavedDataName, JSON.stringify(temp));
+                      }
+
+                    } }>Dodaj</button>
+                </div>
+                <div className="saved-list">
+                  <ul>
+                    { 
+                      this.savedObjects.saved.map((listItem: IStorageObject, index: number) => (
+                          <li key={index}><button name={ "b"+listItem.id } onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
+                            
+                            // remove 'b' from button name
+                            const s: string = e.currentTarget.name.substring(1);
+
+                            const i: number = parseInt(s, 10);
+
+                            console.log("Removing reaction id: " + i);
+                            
+                            const d = this.savedObjects.saved.filter(
+                              obj => obj.id !== i
+                            );
+
+
+                            if (d) {
+                              console.log(d);
+                              this.savedObjects.saved = d;
+                              localStorage.setItem(localStorageSavedDataName, JSON.stringify(this.savedObjects));
+                              this.forceUpdate();
+                            } else {
+                              console.log("Coudn't find object with id = " + i);
+                            }
+                            
+
+
+                          }}>X</button><span className="item-id">{listItem.id}</span>: <span className="item-name">{listItem.name}</span> <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
+                        )
+                      )
+                    }
+                  </ul>
+                </div>
               </div>
             </div>
 
@@ -284,11 +405,15 @@ export default class App extends React.Component<{}, IReagents> {
                   name="iWaterVolume"
                   min="0"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    
+                    // e.target.value = (parseInt(e.target.value, 10) || 0).toString();
+                    
+                    e.target.value = e.target.value.split('.')[0];
                     this.setState(
                       {
                         inputReagents: {
                           ...this.state.inputReagents,
-                          iProbesAmount: parseFloat(e.target.value) || 0,
+                          iProbesAmount: parseInt(e.target.value, 10) || 0,
                         },
                       },
                       this.onInputChange,
@@ -498,9 +623,7 @@ export default class App extends React.Component<{}, IReagents> {
               <div className="dna-result">-</div>
               <div className="action-button">
                 <div>
-                  <button className="btn" onClick={ (e) => {
-                    console.log("OK!");
-                    
+                  <button className="btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {                    
                     this.modalRef.current.style.display = "block";
                   } }><FontAwesomeIcon icon={ faBars } /> Menu</button>
                 </div>

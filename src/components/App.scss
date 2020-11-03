@@ -76,45 +76,95 @@ html, body {
         padding: 6px;
         border: 1px solid #888;
         width: 80%;
-
+        
         .modal-main {
           background-color: $orange-yellow-crayola;
 
-          ul {
-            list-style-type: none;
-            padding-bottom: 20px;
-            margin: 0;
+
+          div.saved-list {
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: visible;
+            ul {
+              list-style-type: none;
+              padding-bottom: 20px;
+              margin: 0;
+              text-align: left;
+              li {
+                height: 28px;
+                button {
+                  background-color: red;
+                  color: white;
+                  outline: none;
+                  border: none;
+                  cursor: pointer;
+                  padding: 4px 8px;
+                  margin: 0 10px 0 0;
+
+                  span.item-id {
+                    margin-left: 15px;
+                    color:red;
+                  }
+
+                  span.item-name {
+                    margin-left: 10px;
+                  }
+                }
+              }
+            }
           }
+
 
           div.modal-title {
             padding: 20px 16px;
             font-weight: bold;
-            border-bottom: 2px solid $persian-green
-          }
+            border-bottom: 2px solid $persian-green;
+            position: relative;
 
-          div.modal-list {
-            padding: 20px;
+            span.title {
+              font-weight: bold;;
+            }
+            span.close {
+              position: absolute;
+              right: 4px;
+              top: 4px;
+              width: 22px;
+              color: $charcoal;
+              font-size: 28px;
+              font-weight: bold;
+              margin: 4px;
+              border: 3px solid $sandy-brown;
+              border-radius: 2px;
+              padding: 0 8px;
+      
+              &:hover, &:focus {
+                color: $sandy-brown;
+                text-decoration: none;
+                cursor: pointer;
+              }
+            }
           }
+          button.add-btn {
+            background-color: $charcoal;
+            border: none;
+            margin: 6px 0;
+            color: $primary-text-color;
+            padding: 10px 18px;
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+            &:hover {
+              background-color: $sandy-brown;
+            }
+          }
+          
+          // div.modal-list {
+          //   padding: 20px;
+          // }
         }
 
       }
 
-      .close {
-        color: $charcoal;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        margin: 4px;
-        border: 3px solid $sandy-brown;
-        border-radius: 2px;
-        padding: 0 8px;
-
-        &:hover, &:focus {
-          color: $sandy-brown;
-          text-decoration: none;
-          cursor: pointer;
-        }
-      }
 
       div.tables {
 
@@ -377,10 +427,10 @@ html, body {
             input {
               padding: 6px;
               outline: none;
-              border: 1px solid $persian-green;
-              border-radius: 2px;
+              border: 2px solid $persian-green;
+              border-radius: 3px;
               text-align: center;
-              width: 120px;
+              width: 60px;
             }
         }
       }
