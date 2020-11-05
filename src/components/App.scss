@@ -90,25 +90,42 @@ html, body {
               padding-bottom: 20px;
               margin: 0;
               text-align: left;
+              color: $charcoal;
               li {
                 height: 28px;
                 button {
-                  background-color: red;
                   color: white;
                   outline: none;
                   border: none;
                   cursor: pointer;
                   padding: 4px 8px;
                   margin: 0 10px 0 0;
-
-                  span.item-id {
-                    margin-left: 15px;
-                    color:red;
+                  transition: background-color .15s ease-in-out;
+                  &.load-btn {
+                    background-color: green;
                   }
-
-                  span.item-name {
-                    margin-left: 10px;
+                  &.load-btn:hover {
+                    background-color: darkgreen;
                   }
+                  &.delete-btn {
+                    background-color: darkred;
+                  }
+                  &.delete-btn:hover {
+                    background-color: red;
+                  }
+                }
+                span.item-id {
+                  margin-left: 15px;
+                  
+                }
+
+                span.item-name {
+                  margin-left: 10px;
+                  font-weight: bold;
+                }
+
+                span.item-date {
+                  font-weight: normal;
                 }
               }
             }
@@ -153,6 +170,7 @@ html, body {
             font-size: 16px;
             outline: none;
             cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
             &:hover {
               background-color: $sandy-brown;
             }
@@ -418,6 +436,7 @@ html, body {
                 font-size: 16px;
                 outline: none;
                 cursor: pointer;
+                transition: background-color 0.15s ease-in-out;
               }
               button.btn:hover {
                 background-color: $sandy-brown;

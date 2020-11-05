@@ -245,17 +245,17 @@ export default class App extends React.Component<{}, IReagents> {
     this.onInputChange();
   }
 
-  public timeConverter(timestamp: string){
-    const t = parseInt(timestamp, 10);
-    const a = new Date(t);
-    const year = a.getFullYear();
+  public timeConverter(timestamp: string): string {
+    const t: number = parseInt(timestamp, 10);
+    const d = new Date(t);
+    const year: number = d.getFullYear();
     const months = ['Sty','Lut','Mar','Kwi','Maj','Cze','Lip','Sie','Wrz','Paź','Lis','Gru'];
-    const month = months[a.getMonth()];
-    const date = a.getDate();
-    const hour = a.getHours();
-    const min = a.getMinutes();
-    const sec = a.getSeconds();
-    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    const month = months[d.getMonth()];
+    const date: number = d.getDate();
+    const hour: number = d.getHours();
+    const min: number = d.getMinutes();
+    const sec: number = d.getSeconds();
+    const time: string = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
     return time;
   }
 
@@ -310,32 +310,57 @@ export default class App extends React.Component<{}, IReagents> {
                   <ul>
                     { 
                       this.savedObjects.saved.map((listItem: IStorageObject, index: number) => (
-                          <li key={index}><button name={ "b"+listItem.id } onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
-                            
-                            // remove 'b' from button name
-                            const s: string = e.currentTarget.name.substring(1);
+                          <li key={index}>
+                            <button name={ "l"+listItem.id } className="load-btn"  onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
 
-                            const i: number = parseInt(s, 10);
+                              const s: string = e.currentTarget.name.substring(1);
+                              const i: number = parseInt(s, 10);
+                              console.log("Loading reaction id: " + i);
+                              const d = this.savedObjects.saved.find(
+                                obj => obj.id === i
+                              );
+                              if (d) {
+                                console.log("Found reactions:");
+                                console.log(d);
+                                
+                                this.storageObject = d;
 
-                            console.log("Removing reaction id: " + i);
-                            
-                            const d = this.savedObjects.saved.filter(
-                              obj => obj.id !== i
-                            );
+                                this.setState(this.storageObject, () => this.forceUpdate());
+
+                                // this.setState(d);
+                                // this.forceUpdate();
+                              }
+                              
 
 
-                            if (d) {
-                              console.log(d);
-                              this.savedObjects.saved = d;
-                              localStorage.setItem(localStorageSavedDataName, JSON.stringify(this.savedObjects));
-                              this.forceUpdate();
-                            } else {
-                              console.log("Coudn't find object with id = " + i);
                             }
+                            }>O</button>
+                            <button name={ "r"+listItem.id } className="delete-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
                             
+                              // remove 'b' from button name
+                              const s: string = e.currentTarget.name.substring(1);
+
+                              const i: number = parseInt(s, 10);
+
+                              console.log("Removing reaction id: " + i);
+                              
+                              const d = this.savedObjects.saved.filter(
+                                obj => obj.id !== i
+                              );
 
 
-                          }}>X</button><span className="item-id">{listItem.id}</span>: <span className="item-name">{listItem.name}</span> <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
+                              if (d) {
+                                console.log(d);
+                                this.savedObjects.saved = d;
+                                localStorage.setItem(localStorageSavedDataName, JSON.stringify(this.savedObjects));
+                                this.forceUpdate();
+                              } else {
+                                console.log("Coudn't find object with id = " + i);
+                              }
+                            }}>X</button>
+                            <span className="item-id">{listItem.id}</span>: 
+                            <span className="item-name">{listItem.name}</span> 
+                            <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
                         )
                       )
                     }
