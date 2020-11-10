@@ -1,5 +1,12 @@
 
-export interface IEntryReagents {
+export interface IFieldInput {
+  name: string;
+  value: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface IFieldsOfCalc {
+  [key:string]: number;
   iMasterMixInputVolume: number;
   iWaterVolume: number;
   iBufferVolume: number;
@@ -12,10 +19,6 @@ export interface IEntryReagents {
   iDNAVolume: number;
   iMasterMixOutputVolume: number;
   iProbesAmount: number;
-}
-
-export interface IOutputReagents {
-  oResultMessage: string;
   oDifferenceVolume: number;
 
   // for one probe
@@ -40,17 +43,11 @@ export interface IOutputReagents {
   oPolymeraseVolumeForAll: number;
 }
 
-export interface IReagents {
-  inputReagents: IEntryReagents;
-  outputReagents: IOutputReagents;
-}
-
 export interface IStorageObject {
   id: number;
   date: string; // timestamp
   name: string;
-  inputReagents: IEntryReagents;
-  outputReagents: IOutputReagents;
+  reagents: IFieldsOfCalc
 }
 
 export interface ISavedDataObject {
