@@ -19,7 +19,7 @@ Visit [pcr.wroblewskipiotr.pl](https://pcr.wroblewskipiotr.pl)
 
 ## Last build
 [![CircleCI](https://circleci.com/gh/szczypiorofix/pcrcalc/tree/master.svg?style=svg)](https://circleci.com/gh/szczypiorofix/pcrcalc/tree/master)
-![Version](https://img.shields.io/badge/version-0.5.03-blue.svg "Version icon")
+![Version](https://img.shields.io/badge/version-0.5.05-blue.svg "Version icon")
 
 
 ## Install, Run, Buid
