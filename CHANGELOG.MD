@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.5.05] - 2020-11-10
+### Added
+- Added FontAwesome icons
+- It's possible now to load or delete saved reactions
+
+### Changed
+- Outputs has been removed from React state
+- big part of the code was simplified
+
+
 ## [0.5.03] - 2020-11-03
 ### Added
 - Added remove button for saved reactions.
