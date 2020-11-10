@@ -1,5 +1,6 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faBars, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from "react";
 import { IFieldsOfCalc, ISavedDataObject, ISettings, IStorageObject } from "../models";
 import "./App.scss";
@@ -27,25 +28,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
     iPrimer2Volume: 1,
     iProbesAmount: 16,
     iWaterVolume: 13,
-    idNTPsVolume: 1,
-    oBufferVolumeForAll: 0,
-    oBufferVolumeForOne: 0,
-    oDNAVolumeForOne: 0,
-    oDifferenceVolume: 0,
-    oEnhancerVolumeForAll: 0,
-    oEnhancerVolumeForOne: 0,
-    oMgCl2VolumeForAll: 0,
-    oMgCl2VolumeForOne: 0,
-    oPolymeraseVolumeForAll: 0,
-    oPolymeraseVolumeForOne: 0,
-    oPrimer1VolumeForAll: 0,
-    oPrimer1VolumeForOne: 0,
-    oPrimer2VolumeForAll: 0,
-    oPrimer2VolumeForOne: 0,
-    oWaterVolumeForAll: 0,
-    oWaterVolumeForOne: 0,
-    odNTPsVolumeForAll: 0,
-    odNTPsVolumeForOne: 0
+    idNTPsVolume: 1
   }
 
   public state: Readonly<IFieldsOfCalc> = this.reagentsDefaultValues;
@@ -53,7 +36,6 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
   private storageObject: IStorageObject;
   private savedObjects: ISavedDataObject;
   private modalRef: any;
-  private lastId: number;
   private settings: ISettings;
 
 
@@ -68,8 +50,6 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
     };
 
     this.modalRef = React.createRef();
-
-    this.lastId = 0;
 
     this.storageObject = {
       id: 0,
@@ -86,20 +66,19 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
     if (typeof Storage !== "undefined") {
       
       // Current object
-      const currentObjectString: string = localStorage.getItem(localStorageCurrentDataName) || JSON.stringify( this.reagentsDefaultValues );
+      const currentObjectString: string = localStorage.getItem(localStorageCurrentDataName) || JSON.stringify( this.storageObject );
       const dataFromStorage: IStorageObject | null = JSON.parse(currentObjectString);
       if (dataFromStorage !== null) {
         this.storageObject = dataFromStorage;
         localStorage.setItem(localStorageCurrentDataName, JSON.stringify( dataFromStorage ));
-        // console.log(this.storageObject);
       }
 
       // Saved object in localStorage
-      const savedObjectsString: string = localStorage.getItem(localStorageSavedDataName) || JSON.stringify({saved: [], lastId: 0});
+      const savedObjectsString: string = localStorage.getItem(localStorageSavedDataName) || JSON.stringify( this.savedObjects );
       const savedDataFromStorage: ISavedDataObject | null = JSON.parse(savedObjectsString);
       if (savedDataFromStorage !== null) {
         this.savedObjects = savedDataFromStorage;
-        this.lastId = savedDataFromStorage.lastId;
+        this.savedObjects.lastId = savedDataFromStorage.lastId;
         localStorage.setItem(localStorageSavedDataName, JSON.stringify( savedDataFromStorage ));
       }
 
@@ -114,8 +93,6 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
         localStorage.setItem(localStorageSettingsName, JSON.stringify( settingsFromStorage ));
       }
 
-      // console.log(this.savedObjects);
-
     } else {
       console.error("Ta przeglądarka nie obsługuje localStorage!");
     }
@@ -123,18 +100,18 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
   }
 
 
-  public saveCurrentToStorage(reset: boolean = false) {
+  // Refresh on the beginning
+  public componentDidMount() {
+    this.setState(this.storageObject.reagents);
+  }
 
+
+  public saveCurrentToStorage() {
     this.storageObject.date = Date.now().toString(); // timestamp
     this.storageObject.reagents = this.state;
     console.log("Zapisywanie do localStorage...");
     localStorage.setItem(localStorageCurrentDataName, JSON.stringify(this.storageObject));
   }
-
-
-  // public componentDidMount() {
-  //   this.onInputChange();
-  // }
 
 
   public timeConverter(timestamp: string): string {
@@ -153,85 +130,40 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
 
 
   public calculateOutputs(event: React.ChangeEvent<HTMLInputElement>) {
-    // console.log(event);
-
     this.setState({ [event.target.name]: parseFloat(event.target.value) || 0 }, () => {
-    
-      const oWat: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iWaterVolume / this.state.iMasterMixInputVolume);
-      const oBuf: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iBufferVolume / this.state.iMasterMixInputVolume);
-      const oEnh: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iEnhancerVolume / this.state.iMasterMixInputVolume);
-      const oMgc: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iMgCl2Volume / this.state.iMasterMixInputVolume);
-      const oPr1: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iPrimer1Volume / this.state.iMasterMixInputVolume);
-      const oPr2: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iPrimer2Volume / this.state.iMasterMixInputVolume);
-      const oDNT: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.idNTPsVolume / this.state.iMasterMixInputVolume);
-      const oPol: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iPolymeraseVolume / this.state.iMasterMixInputVolume);
-      const oDNA: number =
-        this.state.iMasterMixOutputVolume *
-        (this.state.iDNAVolume / this.state.iMasterMixInputVolume);
-
-      const oDif: number =
-        this.state.iWaterVolume +
-        this.state.iBufferVolume +
-        this.state.iEnhancerVolume +
-        this.state.iMgCl2Volume +
-        this.state.iPrimer1Volume +
-        this.state.iPrimer2Volume +
-        this.state.idNTPsVolume +
-        this.state.iPolymeraseVolume +
-        this.state.iDNAVolume -
-        this.state.iMasterMixInputVolume;
-
-    this.setState({
-        oDifferenceVolume: oDif,
-        oWaterVolumeForOne: oWat,
-        oBufferVolumeForOne: oBuf,
-        oEnhancerVolumeForOne: oEnh,
-        oMgCl2VolumeForOne: oMgc,
-        oPrimer1VolumeForOne: oPr1,
-        oPrimer2VolumeForOne: oPr2,
-        odNTPsVolumeForOne: oDNT,
-        oPolymeraseVolumeForOne: oPol,
-        oDNAVolumeForOne: oDNA,
-
-        oWaterVolumeForAll: oWat * this.state.iProbesAmount,
-        oBufferVolumeForAll: oBuf * this.state.iProbesAmount,
-        oEnhancerVolumeForAll: oEnh * this.state.iProbesAmount,
-        oMgCl2VolumeForAll: oMgc * this.state.iProbesAmount,
-        oPrimer1VolumeForAll: oPr1 * this.state.iProbesAmount,
-        oPrimer2VolumeForAll: oPr2 * this.state.iProbesAmount,
-        odNTPsVolumeForAll: oDNT * this.state.iProbesAmount,
-        oPolymeraseVolumeForAll: oPol * this.state.iProbesAmount,
-      });
+      console.log("State zmieniony");
+      this.saveCurrentToStorage();
     });
     console.log("Koniec");
   }
 
 
   public showResultInfo() {
+    const diff: number = this.state.iWaterVolume
+    + this.state.iBufferVolume
+    + this.state.iEnhancerVolume
+    + this.state.iMgCl2Volume
+    + this.state.iPrimer1Volume
+    + this.state.iPrimer2Volume
+    + this.state.idNTPsVolume
+    + this.state.iPolymeraseVolume
+    + this.state.iDNAVolume
+    - this.state.iMasterMixInputVolume;
+    
     let r:string = "OK";
-    if (this.state.oDifferenceVolume > 0) {
+    
+    if (diff > 0) {
       r = "Za dużo!";
     }
-    if (this.state.oDifferenceVolume < 0) {
+    if (diff < 0) {
       r = "Za mało!";
     }
     return r;
+  }
+
+
+  public showOutputValue(v: number): string {
+    return ( this.state.iMasterMixOutputVolume * (v / this.state.iMasterMixInputVolume) * this.state.iProbesAmount ).toFixed(2);
   }
 
 
@@ -240,7 +172,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
       <div className="App">
         <div className="main-part">
           <div ref={ this.modalRef } className="modal">
-            {/* <div className="modal-content">
+            <div className="modal-content">
               <div className="modal-main">
                 <div className="modal-title">
                   <span className="title">Lista zapisanych reakcji:</span>
@@ -251,33 +183,28 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                 }>&times;</span>
                 </div>
                 <div>
-                  <button className="add-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => { 
-
+                  <button className="add-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
                       const sTemp: string | null = localStorage.getItem( localStorageSavedDataName ) || JSON.stringify( { saved: [] });
                       const temp: ISavedDataObject  = JSON.parse(sTemp);
 
                       const tName: string | null = prompt("Nazwa reakcji");
 
                       if (tName) {
-
-                        this.lastId++; // increase id number
-
+                        this.savedObjects.lastId += 1; // increase id number
                         const tempStorage: IStorageObject = {
-                          id: this.lastId,
+                          id: this.savedObjects.lastId,
                           date: Date.now().toString(), // timestamp
                           name: tName,
-                          inputReagents: this.state.inputReagents,
-                          outputReagents: this.state.outputReagents
+                          reagents: this.state
                         }
 
                         temp.saved.push(tempStorage);
-                        temp.lastId = this.lastId;
+                        temp.lastId = this.savedObjects.lastId;
                         this.savedObjects.saved.push(tempStorage);
                         this.forceUpdate();
                         localStorage.setItem(localStorageSavedDataName, JSON.stringify(temp));
                       }
-
-                    } }>Dodaj</button>
+                    } }><FontAwesomeIcon icon={ faPlusCircle } /></button>
                 </div>
                 <div className="saved-list">
                   <ul>
@@ -285,43 +212,32 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                       this.savedObjects.saved.map((listItem: IStorageObject, index: number) => (
                           <li key={index}>
                             <button name={ "l"+listItem.id } className="load-btn"  onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
-
                               const s: string = e.currentTarget.name.substring(1);
                               const i: number = parseInt(s, 10);
-                              console.log("Loading reaction id: " + i);
+                              // console.log("Loading reaction id: " + i);
                               const d = this.savedObjects.saved.find(
                                 obj => obj.id === i
                               );
                               if (d) {
-                                console.log("Found reactions:");
-                                console.log(d);
-                                
+                                console.log("Loading reaction: " + d.name);
+                                // console.log(d);
                                 this.storageObject = d;
-
-                                this.setState(this.storageObject, () => this.forceUpdate());
-
-                                // this.setState(d);
-                                // this.forceUpdate();
+                                this.setState(this.storageObject.reagents);
+                                this.forceUpdate();
+                                this.modalRef.current.style.display = "none";
+                              } else {
+                                console.error("Ooops! Something went wrong, mister!")
                               }
-                              
-
-
                             }
                             }>O</button>
                             <button name={ "r"+listItem.id } className="delete-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
-                            
                               // remove 'b' from button name
                               const s: string = e.currentTarget.name.substring(1);
-
                               const i: number = parseInt(s, 10);
-
                               console.log("Removing reaction id: " + i);
-                              
                               const d = this.savedObjects.saved.filter(
-                                obj => obj.id !== i
+                                (obj: IStorageObject) => obj.id !== i
                               );
-
-
                               if (d) {
                                 console.log(d);
                                 this.savedObjects.saved = d;
@@ -330,7 +246,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                               } else {
                                 console.log("Coudn't find object with id = " + i);
                               }
-                            }}>X</button>
+                            }}><FontAwesomeIcon icon={ faTrashAlt } /></button>
                             <span className="item-id">{listItem.id}</span>: 
                             <span className="item-name">{listItem.name}</span> 
                             <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
@@ -340,7 +256,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                   </ul>
                 </div>
               </div>
-            </div> */}
+            </div>
 
           </div>
 
@@ -462,15 +378,25 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
-              <div className="difference"><div>Różnica {this.state.oDifferenceVolume}</div></div>
-              <div className="water-result">{this.state.oWaterVolumeForAll.toFixed(2)}</div>
-              <div className="buffer-result">{this.state.oBufferVolumeForAll.toFixed(2)}</div>
-              <div className="enhancer-result">{this.state.oEnhancerVolumeForAll.toFixed(2)}</div>
-              <div className="primer1-result">{this.state.oPrimer1VolumeForAll.toFixed(2)}</div>
-              <div className="primer2-result">{this.state.oPrimer2VolumeForAll.toFixed(2)}</div>
-              <div className="polymerase-result">{this.state.oPolymeraseVolumeForAll.toFixed(2)}</div>
-              <div className="dntps-result">{this.state.odNTPsVolumeForAll.toFixed(2)}</div>
-              <div className="mgcl2-result">{this.state.oMgCl2VolumeForAll.toFixed(2)}</div>
+              <div className="difference"><div>Różnica { (this.state.iWaterVolume
+                + this.state.iBufferVolume
+                + this.state.iEnhancerVolume
+                + this.state.iMgCl2Volume
+                + this.state.iPrimer1Volume
+                + this.state.iPrimer2Volume
+                + this.state.idNTPsVolume
+                + this.state.iPolymeraseVolume
+                + this.state.iDNAVolume
+                - this.state.iMasterMixInputVolume).toFixed(2)
+              }</div></div>
+              <div className="water-result">{ this.showOutputValue(this.state.iWaterVolume) }</div>
+              <div className="buffer-result">{ this.showOutputValue(this.state.iBufferVolume) }</div>
+              <div className="enhancer-result">{ this.showOutputValue(this.state.iEnhancerVolume) }</div>
+              <div className="primer1-result">{ this.showOutputValue(this.state.iPrimer1Volume) }</div>
+              <div className="primer2-result">{ this.showOutputValue(this.state.iPrimer2Volume) }</div>
+              <div className="polymerase-result">{ this.showOutputValue(this.state.iPolymeraseVolume) }</div>
+              <div className="dntps-result">{ this.showOutputValue(this.state.idNTPsVolume) }</div>
+              <div className="mgcl2-result">{ this.showOutputValue(this.state.iMgCl2Volume) }</div>
               <div className="dna-result">-</div>
               <div className="action-button">
                 <div>

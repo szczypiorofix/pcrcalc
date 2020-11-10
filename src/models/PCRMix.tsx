@@ -19,28 +19,6 @@ export interface IFieldsOfCalc {
   iDNAVolume: number;
   iMasterMixOutputVolume: number;
   iProbesAmount: number;
-  oDifferenceVolume: number;
-
-  // for one probe
-  oWaterVolumeForOne: number;
-  oBufferVolumeForOne: number;
-  oEnhancerVolumeForOne: number;
-  oMgCl2VolumeForOne: number;
-  oPrimer1VolumeForOne: number;
-  oPrimer2VolumeForOne: number;
-  odNTPsVolumeForOne: number;
-  oPolymeraseVolumeForOne: number;
-  oDNAVolumeForOne: number;
-
-  // for all probes
-  oWaterVolumeForAll: number;
-  oBufferVolumeForAll: number;
-  oEnhancerVolumeForAll: number;
-  oMgCl2VolumeForAll: number;
-  oPrimer1VolumeForAll: number;
-  oPrimer2VolumeForAll: number;
-  odNTPsVolumeForAll: number;
-  oPolymeraseVolumeForAll: number;
 }
 
 export interface IStorageObject {
