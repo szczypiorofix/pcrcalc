@@ -1,19 +1,18 @@
-// import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import React from "react";
 import { faBars, faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from "react";
 import { IFieldsOfCalc, ISavedDataObject, ISettings, IStorageObject } from "../models";
-import "./App.scss";
 import Field from "./Field";
+import "./App.scss";
 
-
-const localStorageCurrentDataName: string = "PCRCalcCurrentValues";
-const localStorageSavedDataName: string = "PCRCalcSavedValues";
-const localStorageSettingsName: string = "PCRCalcSettings";
-const defaultSavedReactionName: string = "default_name";
 
 
 export default class App extends React.Component<{}, IStorageObject> {
+
+  private localStorageCurrentDataName: Readonly<string> = "PCRCalcCurrentValues";
+  private localStorageSavedDataName: string = "PCRCalcSavedValues";
+  private localStorageSettingsName: string = "PCRCalcSettings";
+  private defaultSavedReactionName: string = "default_name";
 
   // default values
   public reagentsDefaultValues: Readonly<IFieldsOfCalc> = {
@@ -58,7 +57,7 @@ export default class App extends React.Component<{}, IStorageObject> {
     this.state = {
       id: 0,
       date: Date.now().toString(),
-      name: defaultSavedReactionName,
+      name: this.defaultSavedReactionName,
       reagents: this.reagentsDefaultValues
     }
 
@@ -70,31 +69,31 @@ export default class App extends React.Component<{}, IStorageObject> {
     if (typeof Storage !== "undefined") {
       
       // Current object
-      const currentObjectString: string = localStorage.getItem(localStorageCurrentDataName) || JSON.stringify( this.state );
+      const currentObjectString: string = localStorage.getItem(this.localStorageCurrentDataName) || JSON.stringify( this.state );
       const dataFromStorage: IStorageObject | null = JSON.parse(currentObjectString);
       if (dataFromStorage !== null) {
         this.state = dataFromStorage;
-        localStorage.setItem(localStorageCurrentDataName, JSON.stringify( dataFromStorage ));
+        localStorage.setItem(this.localStorageCurrentDataName, JSON.stringify( dataFromStorage ));
       }
 
       // Saved object in localStorage
-      const savedObjectsString: string = localStorage.getItem(localStorageSavedDataName) || JSON.stringify( this.savedObjects );
+      const savedObjectsString: string = localStorage.getItem(this.localStorageSavedDataName) || JSON.stringify( this.savedObjects );
       const savedDataFromStorage: ISavedDataObject | null = JSON.parse(savedObjectsString);
       if (savedDataFromStorage !== null) {
         this.savedObjects = savedDataFromStorage;
         this.savedObjects.lastId = savedDataFromStorage.lastId;
-        localStorage.setItem(localStorageSavedDataName, JSON.stringify( savedDataFromStorage ));
+        localStorage.setItem(this.localStorageSavedDataName, JSON.stringify( savedDataFromStorage ));
       }
 
       // Settings saved in localStorage
-      const settingsString: string = localStorage.getItem(localStorageSettingsName) || JSON.stringify( this.settings );
+      const settingsString: string = localStorage.getItem(this.localStorageSettingsName) || JSON.stringify( this.settings );
       const settingsFromStorage: ISettings | null = JSON.parse(settingsString);
       
       // TODO: sprawdzenie czy wersja apki jest nowsza niż to co w localStorage, jeśli tak to migracja do nowszej wersji
       
       if (settingsFromStorage !== null) {
         this.settings = settingsFromStorage;
-        localStorage.setItem(localStorageSettingsName, JSON.stringify( settingsFromStorage ));
+        localStorage.setItem(this.localStorageSettingsName, JSON.stringify( settingsFromStorage ));
       }
 
     } else {
@@ -110,7 +109,7 @@ export default class App extends React.Component<{}, IStorageObject> {
       ...this.state,
       date: Date.now().toString()
     }, ()=> {
-      localStorage.setItem(localStorageCurrentDataName, JSON.stringify(this.state));
+      localStorage.setItem(this.localStorageCurrentDataName, JSON.stringify(this.state));
     });
   }
 
@@ -147,16 +146,16 @@ export default class App extends React.Component<{}, IStorageObject> {
 
 
   public showResultInfo() {
-    const diff: number = this.state.reagents.iWaterVolume
-    + this.state.reagents.iBufferVolume
-    + this.state.reagents.iEnhancerVolume
-    + this.state.reagents.iMgCl2Volume
-    + this.state.reagents.iPrimer1Volume
-    + this.state.reagents.iPrimer2Volume
-    + this.state.reagents.idNTPsVolume
-    + this.state.reagents.iPolymeraseVolume
-    + this.state.reagents.iDNAVolume
-    - this.state.reagents.iMasterMixInputVolume;
+    const diff: number = (this.state.reagents.iWaterVolume ? this.state.reagents.iWaterVolume : 0)
+    + ( this.state.reagents.iBufferVolume ? this.state.reagents.iBufferVolume : 0 )
+    + (this.state.reagents.iEnhancerVolume ? this.state.reagents.iEnhancerVolume : 0)
+    + (this.state.reagents.iMgCl2Volume ? this.state.reagents.iMgCl2Volume : 0)
+    + (this.state.reagents.iPrimer1Volume ? this.state.reagents.iPrimer1Volume : 0)
+    + (this.state.reagents.iPrimer2Volume ? this.state.reagents.iPrimer2Volume : 0)
+    + (this.state.reagents.idNTPsVolume ? this.state.reagents.idNTPsVolume : 0)
+    + (this.state.reagents.iPolymeraseVolume ? this.state.reagents.iPolymeraseVolume : 0)
+    + (this.state.reagents.iDNAVolume ? this.state.reagents.iDNAVolume : 0)
+    - (this.state.reagents.iMasterMixInputVolume ? this.state.reagents.iMasterMixInputVolume : 0);
     
     let r:string = "OK";
     
@@ -170,8 +169,13 @@ export default class App extends React.Component<{}, IStorageObject> {
   }
 
 
-  public showOutputValue(v: number): string {
-    return ( this.state.reagents.iMasterMixOutputVolume * (v / this.state.reagents.iMasterMixInputVolume) * this.state.reagents.iProbesAmount ).toFixed(2);
+  public showOutputValue(v: number | undefined): string {
+    return ( (this.state.reagents.iMasterMixOutputVolume ? this.state.reagents.iMasterMixOutputVolume : 0) * ( (v ? v : 0) / (this.state.reagents.iMasterMixInputVolume ? this.state.reagents.iMasterMixInputVolume : 1) ) * (this.state.reagents.iProbesAmount ? this.state.reagents.iProbesAmount: 0) ).toFixed(2);
+  }
+
+
+  public inputValue(v: number): number | null {
+    return 0;
   }
 
 
@@ -192,7 +196,7 @@ export default class App extends React.Component<{}, IStorageObject> {
                 </div>
                 <div>
                   <button className="add-btn" title="Zapisz reakcję" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
-                      const sTemp: string | null = localStorage.getItem( localStorageSavedDataName ) || JSON.stringify( { saved: [] });
+                      const sTemp: string | null = localStorage.getItem( this.localStorageSavedDataName ) || JSON.stringify( { saved: [] });
                       const temp: ISavedDataObject  = JSON.parse(sTemp);
 
                       const tName: string | null = prompt("Nazwa reakcji");
@@ -210,7 +214,7 @@ export default class App extends React.Component<{}, IStorageObject> {
                         temp.lastId = this.savedObjects.lastId;
                         this.savedObjects.saved.push(tempStorage);
                         this.forceUpdate();
-                        localStorage.setItem(localStorageSavedDataName, JSON.stringify(temp));
+                        localStorage.setItem(this.localStorageSavedDataName, JSON.stringify(temp));
                       }
                     } }><FontAwesomeIcon icon={ faSave } /></button>
                 </div>
@@ -231,7 +235,7 @@ export default class App extends React.Component<{}, IStorageObject> {
                               if (d) {
                                 console.log(d);
                                 this.savedObjects.saved = d;
-                                localStorage.setItem(localStorageSavedDataName, JSON.stringify(this.savedObjects));
+                                localStorage.setItem(this.localStorageSavedDataName, JSON.stringify(this.savedObjects));
                                 this.forceUpdate();
                               } else {
                                 console.log("Coudn't find object with id = " + i);
@@ -278,14 +282,14 @@ export default class App extends React.Component<{}, IStorageObject> {
               <div className="vol-in-input">
                 <Field
                   name = "iMasterMixInputVolume"
-                  value = { this.state.reagents.iMasterMixInputVolume }
+                  value = { (this.state.reagents.iMasterMixInputVolume ? this.state.reagents.iMasterMixInputVolume : "") }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="vol-out-input">
                 <Field
                   name = "iMasterMixOutputVolume"
-                  value = { this.state.reagents.iMasterMixOutputVolume }
+                  value = { this.state.reagents.iMasterMixOutputVolume ? this.state.reagents.iMasterMixOutputVolume : "" }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
@@ -302,7 +306,7 @@ export default class App extends React.Component<{}, IStorageObject> {
               <div className="probe-amount-input">
                 <Field
                   name = "iProbesAmount"
-                  value = { this.state.reagents.iProbesAmount }
+                  value = { this.state.reagents.iProbesAmount ? this.state.reagents.iProbesAmount : "" }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
@@ -328,79 +332,79 @@ export default class App extends React.Component<{}, IStorageObject> {
               <div className="water-input">
                 <Field
                   name = "iWaterVolume"
-                  value = { this.state.reagents.iWaterVolume }
+                  value = { this.state.reagents.iWaterVolume ? this.state.reagents.iWaterVolume : ""}
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="buffer-input">
                 <Field
                   name = "iBufferVolume"
-                  value = { this.state.reagents.iBufferVolume }
+                  value = { this.state.reagents.iBufferVolume ? this.state.reagents.iBufferVolume : "" }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="enhancer-input">
                 <Field
                   name = "iEnhancerVolume"
-                  value = { this.state.reagents.iEnhancerVolume }
+                  value = { this.state.reagents.iEnhancerVolume ? this.state.reagents.iEnhancerVolume : "" }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="primer1-input">
                 <Field
                   name = "iPrimer1Volume"
-                  value = { this.state.reagents.iPrimer1Volume }
+                  value = { this.state.reagents.iPrimer1Volume ? this.state.reagents.iPrimer1Volume : ""}
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="primer2-input">
                 <Field
                   name = "iPrimer2Volume"
-                  value = { this.state.reagents.iPrimer2Volume }
+                  value = { this.state.reagents.iPrimer2Volume ? this.state.reagents.iPrimer2Volume : ""}
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="polymerase-input">
                 <Field
                   name = "iPolymeraseVolume"
-                  value = { this.state.reagents.iPolymeraseVolume }
+                  value = { this.state.reagents.iPolymeraseVolume ? this.state.reagents.iPolymeraseVolume : "" }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="dntps-input">
                 <Field
                   name = "idNTPsVolume"
-                  value = { this.state.reagents.idNTPsVolume }
+                  value = { this.state.reagents.idNTPsVolume ? this.state.reagents.idNTPsVolume : ""}
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="mgcl2-input">
                 <Field
                   name = "iMgCl2Volume"
-                  value = { this.state.reagents.iMgCl2Volume }
+                  value = { this.state.reagents.iMgCl2Volume ? this.state.reagents.iMgCl2Volume : ""}
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="dna-input">
                 <Field
                   name = "iDNAVolume"
-                  value = { this.state.reagents.iDNAVolume }
+                  value = { this.state.reagents.iDNAVolume ? this.state.reagents.iDNAVolume : ""}
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
-              <div className="difference"><div>Różnica { (this.state.reagents.iWaterVolume
-                + this.state.reagents.iBufferVolume
-                + this.state.reagents.iEnhancerVolume
-                + this.state.reagents.iMgCl2Volume
-                + this.state.reagents.iPrimer1Volume
-                + this.state.reagents.iPrimer2Volume
-                + this.state.reagents.idNTPsVolume
-                + this.state.reagents.iPolymeraseVolume
-                + this.state.reagents.iDNAVolume
-                - this.state.reagents.iMasterMixInputVolume).toFixed(2)
+              <div className="difference"><div>Różnica { ( (this.state.reagents.iWaterVolume ? this.state.reagents.iWaterVolume : 0)
+                + (this.state.reagents.iBufferVolume ? this.state.reagents.iBufferVolume : 0)
+                + (this.state.reagents.iEnhancerVolume ? this.state.reagents.iEnhancerVolume : 0)
+                + (this.state.reagents.iMgCl2Volume ? this.state.reagents.iMgCl2Volume : 0)
+                + (this.state.reagents.iPrimer1Volume ? this.state.reagents.iPrimer1Volume : 0)
+                + (this.state.reagents.iPrimer2Volume ? this.state.reagents.iPrimer2Volume : 0)
+                + (this.state.reagents.idNTPsVolume ? this.state.reagents.idNTPsVolume : 0)
+                + (this.state.reagents.iPolymeraseVolume ? this.state.reagents.iPolymeraseVolume : 0)
+                + (this.state.reagents.iDNAVolume ? this.state.reagents.iDNAVolume : 0)
+                - (this.state.reagents.iMasterMixInputVolume ? this.state.reagents.iMasterMixInputVolume : 0)).toFixed(2)
               }</div></div>
               <div className="water-result">{ this.showOutputValue(this.state.reagents.iWaterVolume) }</div>
-              <div className="buffer-result">{ this.showOutputValue(this.state.reagents.iBufferVolume) }</div>
+              <div className="buffer-result">{ this.showOutputValue(this.state.reagents.iBufferVolume ? this.state.reagents.iBufferVolume : 0) }</div>
               <div className="enhancer-result">{ this.showOutputValue(this.state.reagents.iEnhancerVolume) }</div>
               <div className="primer1-result">{ this.showOutputValue(this.state.reagents.iPrimer1Volume) }</div>
               <div className="primer2-result">{ this.showOutputValue(this.state.reagents.iPrimer2Volume) }</div>
