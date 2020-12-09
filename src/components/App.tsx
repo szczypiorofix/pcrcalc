@@ -1,18 +1,19 @@
-import React from "react";
 import { faBars, faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
 import { IFieldsOfCalc, ISavedDataObject, ISettings, IStorageObject } from "../models";
-import Field from "./Field";
 import "./App.scss";
+import Field from "./Field";
+
 
 
 
 export default class App extends React.Component<{}, IStorageObject> {
 
-  private localStorageCurrentDataName: Readonly<string> = "PCRCalcCurrentValues";
-  private localStorageSavedDataName: string = "PCRCalcSavedValues";
-  private localStorageSettingsName: string = "PCRCalcSettings";
-  private defaultSavedReactionName: string = "default_name";
+  public localStorageCurrentDataName: Readonly<string> = "PCRCalcCurrentValues";
+  public localStorageSavedDataName: string = "PCRCalcSavedValues";
+  public localStorageSettingsName: string = "PCRCalcSettings";
+  public defaultSavedReactionName: string = "default_name";
 
   // default values
   public reagentsDefaultValues: Readonly<IFieldsOfCalc> = {
