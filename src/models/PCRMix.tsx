@@ -1,24 +1,24 @@
 
 export interface IFieldInput {
   name: string;
-  value: number;
+  value: number | string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface IFieldsOfCalc {
-  [key:string]: number;
-  iMasterMixInputVolume: number;
-  iWaterVolume: number;
-  iBufferVolume: number;
-  iEnhancerVolume: number;
-  iMgCl2Volume: number;
-  iPrimer1Volume: number;
-  iPrimer2Volume: number;
-  idNTPsVolume: number;
-  iPolymeraseVolume: number;
-  iDNAVolume: number;
-  iMasterMixOutputVolume: number;
-  iProbesAmount: number;
+  [key:string]:           number | undefined;
+  iMasterMixInputVolume:  number | undefined;
+  iWaterVolume:           number | undefined;
+  iBufferVolume:          number | undefined;
+  iEnhancerVolume:        number | undefined;
+  iMgCl2Volume:           number | undefined;
+  iPrimer1Volume:         number | undefined;
+  iPrimer2Volume:         number | undefined;
+  idNTPsVolume:           number | undefined;
+  iPolymeraseVolume:      number | undefined;
+  iDNAVolume:             number | undefined;
+  iMasterMixOutputVolume: number | undefined;
+  iProbesAmount:          number | undefined;
 }
 
 export interface IStorageObject {
