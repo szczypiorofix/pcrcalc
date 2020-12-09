@@ -1,5 +1,5 @@
 // import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from "react";
 import { IFieldsOfCalc, ISavedDataObject, ISettings, IStorageObject } from "../models";
@@ -13,7 +13,7 @@ const localStorageSettingsName: string = "PCRCalcSettings";
 const defaultSavedReactionName: string = "default_name";
 
 
-export default class App extends React.Component<{}, IFieldsOfCalc> {
+export default class App extends React.Component<{}, IStorageObject> {
 
   // default values
   public reagentsDefaultValues: Readonly<IFieldsOfCalc> = {
@@ -31,9 +31,13 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
     idNTPsVolume: 1
   }
 
-  public state: Readonly<IFieldsOfCalc> = this.reagentsDefaultValues;
+  public state: Readonly<IStorageObject> = {
+    date: "0",
+    id: 0,
+    name: "default_name",
+    reagents: this.reagentsDefaultValues
+  }
 
-  private storageObject: IStorageObject;
   private savedObjects: ISavedDataObject;
   private modalRef: any;
   private settings: ISettings;
@@ -51,12 +55,12 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
 
     this.modalRef = React.createRef();
 
-    this.storageObject = {
+    this.state = {
       id: 0,
-      date: Date.now().toString(), // timestamp
+      date: Date.now().toString(),
       name: defaultSavedReactionName,
-      reagents: this.state
-    };
+      reagents: this.reagentsDefaultValues
+    }
 
     this.savedObjects = {
       saved: [],
@@ -66,10 +70,10 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
     if (typeof Storage !== "undefined") {
       
       // Current object
-      const currentObjectString: string = localStorage.getItem(localStorageCurrentDataName) || JSON.stringify( this.storageObject );
+      const currentObjectString: string = localStorage.getItem(localStorageCurrentDataName) || JSON.stringify( this.state );
       const dataFromStorage: IStorageObject | null = JSON.parse(currentObjectString);
       if (dataFromStorage !== null) {
-        this.storageObject = dataFromStorage;
+        this.state = dataFromStorage;
         localStorage.setItem(localStorageCurrentDataName, JSON.stringify( dataFromStorage ));
       }
 
@@ -86,7 +90,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
       const settingsString: string = localStorage.getItem(localStorageSettingsName) || JSON.stringify( this.settings );
       const settingsFromStorage: ISettings | null = JSON.parse(settingsString);
       
-      // sprawdzenie czy wersja apki jest nowsza niż to co w localStorage, jeśli tak to migracja do nowszej wersji
+      // TODO: sprawdzenie czy wersja apki jest nowsza niż to co w localStorage, jeśli tak to migracja do nowszej wersji
       
       if (settingsFromStorage !== null) {
         this.settings = settingsFromStorage;
@@ -100,17 +104,14 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
   }
 
 
-  // Refresh on the beginning
-  public componentDidMount() {
-    this.setState(this.storageObject.reagents);
-  }
-
-
   public saveCurrentToStorage() {
-    this.storageObject.date = Date.now().toString(); // timestamp
-    this.storageObject.reagents = this.state;
     console.log("Zapisywanie do localStorage...");
-    localStorage.setItem(localStorageCurrentDataName, JSON.stringify(this.storageObject));
+    this.setState({
+      ...this.state,
+      date: Date.now().toString()
+    }, ()=> {
+      localStorage.setItem(localStorageCurrentDataName, JSON.stringify(this.state));
+    });
   }
 
 
@@ -124,31 +125,38 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
     const hour: number = d.getHours();
     const min: number = d.getMinutes();
     const sec: number = d.getSeconds();
-    const time: string = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    const time: string = 
+        (date < 10 ? '0'+date : date) + ' '
+      + month + ' '
+      + year + ' '
+      + (hour < 10 ? '0'+hour : hour) + ':'
+      + (min < 10 ? '0'+min : min)  + ':'
+      + (sec < 10 ? '0'+sec : sec);
     return time;
   }
 
 
   public calculateOutputs(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ [event.target.name]: parseFloat(event.target.value) || 0 }, () => {
-      console.log("State zmieniony");
+    this.setState({...this.state,
+      reagents: {...this.state.reagents, [event.target.name]: parseFloat(event.target.value) || 0 } }, () => {
+      // console.log("State zmieniony");
       this.saveCurrentToStorage();
     });
-    console.log("Koniec");
+    // console.log("Koniec");
   }
 
 
   public showResultInfo() {
-    const diff: number = this.state.iWaterVolume
-    + this.state.iBufferVolume
-    + this.state.iEnhancerVolume
-    + this.state.iMgCl2Volume
-    + this.state.iPrimer1Volume
-    + this.state.iPrimer2Volume
-    + this.state.idNTPsVolume
-    + this.state.iPolymeraseVolume
-    + this.state.iDNAVolume
-    - this.state.iMasterMixInputVolume;
+    const diff: number = this.state.reagents.iWaterVolume
+    + this.state.reagents.iBufferVolume
+    + this.state.reagents.iEnhancerVolume
+    + this.state.reagents.iMgCl2Volume
+    + this.state.reagents.iPrimer1Volume
+    + this.state.reagents.iPrimer2Volume
+    + this.state.reagents.idNTPsVolume
+    + this.state.reagents.iPolymeraseVolume
+    + this.state.reagents.iDNAVolume
+    - this.state.reagents.iMasterMixInputVolume;
     
     let r:string = "OK";
     
@@ -163,7 +171,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
 
 
   public showOutputValue(v: number): string {
-    return ( this.state.iMasterMixOutputVolume * (v / this.state.iMasterMixInputVolume) * this.state.iProbesAmount ).toFixed(2);
+    return ( this.state.reagents.iMasterMixOutputVolume * (v / this.state.reagents.iMasterMixInputVolume) * this.state.reagents.iProbesAmount ).toFixed(2);
   }
 
 
@@ -183,7 +191,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                 }>&times;</span>
                 </div>
                 <div>
-                  <button className="add-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
+                  <button className="add-btn" title="Zapisz reakcję" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
                       const sTemp: string | null = localStorage.getItem( localStorageSavedDataName ) || JSON.stringify( { saved: [] });
                       const temp: ISavedDataObject  = JSON.parse(sTemp);
 
@@ -195,41 +203,23 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                           id: this.savedObjects.lastId,
                           date: Date.now().toString(), // timestamp
                           name: tName,
-                          reagents: this.state
+                          reagents: this.state.reagents
                         }
-
+                        
                         temp.saved.push(tempStorage);
                         temp.lastId = this.savedObjects.lastId;
                         this.savedObjects.saved.push(tempStorage);
                         this.forceUpdate();
                         localStorage.setItem(localStorageSavedDataName, JSON.stringify(temp));
                       }
-                    } }><FontAwesomeIcon icon={ faPlusCircle } /></button>
+                    } }><FontAwesomeIcon icon={ faSave } /></button>
                 </div>
                 <div className="saved-list">
                   <ul>
                     { 
                       this.savedObjects.saved.map((listItem: IStorageObject, index: number) => (
                           <li key={index}>
-                            <button name={ "l"+listItem.id } className="load-btn"  onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
-                              const s: string = e.currentTarget.name.substring(1);
-                              const i: number = parseInt(s, 10);
-                              // console.log("Loading reaction id: " + i);
-                              const d = this.savedObjects.saved.find(
-                                obj => obj.id === i
-                              );
-                              if (d) {
-                                console.log("Loading reaction: " + d.name);
-                                // console.log(d);
-                                this.storageObject = d;
-                                this.setState(this.storageObject.reagents);
-                                this.forceUpdate();
-                                this.modalRef.current.style.display = "none";
-                              } else {
-                                console.error("Ooops! Something went wrong, mister!")
-                              }
-                            }
-                            }>O</button>
+                            
                             <button name={ "r"+listItem.id } className="delete-btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
                               // remove 'b' from button name
                               const s: string = e.currentTarget.name.substring(1);
@@ -247,8 +237,28 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
                                 console.log("Coudn't find object with id = " + i);
                               }
                             }}><FontAwesomeIcon icon={ faTrashAlt } /></button>
-                            <span className="item-id">{listItem.id}</span>: 
-                            <span className="item-name">{listItem.name}</span> 
+
+                            <button name={ "l"+listItem.id } className="load-btn"  onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
+                              const s: string = e.currentTarget.name.substring(1);
+                              const i: number = parseInt(s, 10);
+                              // console.log("Loading reaction id: " + i);
+                              const d = this.savedObjects.saved.find(
+                                obj => obj.id === i
+                              );
+                              if (d) {
+                                this.setState(d, ()=> {
+                                  this.modalRef.current.style.display = "none";
+                                  console.log("Loaded reaction: " + d.name);
+                                });
+                              } else {
+                                console.error("Ooops! Something went wrong, mister!")
+                              }
+                            }
+                            }>
+                              <span className="item-id">{listItem.id}</span>:
+                              <span className="item-name">{listItem.name}</span> 
+                            </button>
+
                             <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
                         )
                       )
@@ -268,14 +278,14 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
               <div className="vol-in-input">
                 <Field
                   name = "iMasterMixInputVolume"
-                  value = { this.state.iMasterMixInputVolume }
+                  value = { this.state.reagents.iMasterMixInputVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="vol-out-input">
                 <Field
                   name = "iMasterMixOutputVolume"
-                  value = { this.state.iMasterMixOutputVolume }
+                  value = { this.state.reagents.iMasterMixOutputVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
@@ -292,7 +302,7 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
               <div className="probe-amount-input">
                 <Field
                   name = "iProbesAmount"
-                  value = { this.state.iProbesAmount }
+                  value = { this.state.reagents.iProbesAmount }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
@@ -318,85 +328,85 @@ export default class App extends React.Component<{}, IFieldsOfCalc> {
               <div className="water-input">
                 <Field
                   name = "iWaterVolume"
-                  value = { this.state.iWaterVolume }
+                  value = { this.state.reagents.iWaterVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="buffer-input">
                 <Field
                   name = "iBufferVolume"
-                  value = { this.state.iBufferVolume }
+                  value = { this.state.reagents.iBufferVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="enhancer-input">
                 <Field
                   name = "iEnhancerVolume"
-                  value = { this.state.iEnhancerVolume }
+                  value = { this.state.reagents.iEnhancerVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="primer1-input">
                 <Field
                   name = "iPrimer1Volume"
-                  value = { this.state.iPrimer1Volume }
+                  value = { this.state.reagents.iPrimer1Volume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="primer2-input">
                 <Field
                   name = "iPrimer2Volume"
-                  value = { this.state.iPrimer2Volume }
+                  value = { this.state.reagents.iPrimer2Volume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="polymerase-input">
                 <Field
                   name = "iPolymeraseVolume"
-                  value = { this.state.iPolymeraseVolume }
+                  value = { this.state.reagents.iPolymeraseVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="dntps-input">
                 <Field
                   name = "idNTPsVolume"
-                  value = { this.state.idNTPsVolume }
+                  value = { this.state.reagents.idNTPsVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="mgcl2-input">
                 <Field
                   name = "iMgCl2Volume"
-                  value = { this.state.iMgCl2Volume }
+                  value = { this.state.reagents.iMgCl2Volume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
               <div className="dna-input">
                 <Field
                   name = "iDNAVolume"
-                  value = { this.state.iDNAVolume }
+                  value = { this.state.reagents.iDNAVolume }
                   onChange = { (e: React.ChangeEvent<HTMLInputElement>) => this.calculateOutputs(e) }
                 ></Field>
               </div>
-              <div className="difference"><div>Różnica { (this.state.iWaterVolume
-                + this.state.iBufferVolume
-                + this.state.iEnhancerVolume
-                + this.state.iMgCl2Volume
-                + this.state.iPrimer1Volume
-                + this.state.iPrimer2Volume
-                + this.state.idNTPsVolume
-                + this.state.iPolymeraseVolume
-                + this.state.iDNAVolume
-                - this.state.iMasterMixInputVolume).toFixed(2)
+              <div className="difference"><div>Różnica { (this.state.reagents.iWaterVolume
+                + this.state.reagents.iBufferVolume
+                + this.state.reagents.iEnhancerVolume
+                + this.state.reagents.iMgCl2Volume
+                + this.state.reagents.iPrimer1Volume
+                + this.state.reagents.iPrimer2Volume
+                + this.state.reagents.idNTPsVolume
+                + this.state.reagents.iPolymeraseVolume
+                + this.state.reagents.iDNAVolume
+                - this.state.reagents.iMasterMixInputVolume).toFixed(2)
               }</div></div>
-              <div className="water-result">{ this.showOutputValue(this.state.iWaterVolume) }</div>
-              <div className="buffer-result">{ this.showOutputValue(this.state.iBufferVolume) }</div>
-              <div className="enhancer-result">{ this.showOutputValue(this.state.iEnhancerVolume) }</div>
-              <div className="primer1-result">{ this.showOutputValue(this.state.iPrimer1Volume) }</div>
-              <div className="primer2-result">{ this.showOutputValue(this.state.iPrimer2Volume) }</div>
-              <div className="polymerase-result">{ this.showOutputValue(this.state.iPolymeraseVolume) }</div>
-              <div className="dntps-result">{ this.showOutputValue(this.state.idNTPsVolume) }</div>
-              <div className="mgcl2-result">{ this.showOutputValue(this.state.iMgCl2Volume) }</div>
+              <div className="water-result">{ this.showOutputValue(this.state.reagents.iWaterVolume) }</div>
+              <div className="buffer-result">{ this.showOutputValue(this.state.reagents.iBufferVolume) }</div>
+              <div className="enhancer-result">{ this.showOutputValue(this.state.reagents.iEnhancerVolume) }</div>
+              <div className="primer1-result">{ this.showOutputValue(this.state.reagents.iPrimer1Volume) }</div>
+              <div className="primer2-result">{ this.showOutputValue(this.state.reagents.iPrimer2Volume) }</div>
+              <div className="polymerase-result">{ this.showOutputValue(this.state.reagents.iPolymeraseVolume) }</div>
+              <div className="dntps-result">{ this.showOutputValue(this.state.reagents.idNTPsVolume) }</div>
+              <div className="mgcl2-result">{ this.showOutputValue(this.state.reagents.iMgCl2Volume) }</div>
               <div className="dna-result">-</div>
               <div className="action-button">
                 <div>
