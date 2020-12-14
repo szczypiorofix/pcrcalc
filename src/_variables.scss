@@ -1,0 +1,43 @@
+
+// Color palette
+$charcoal: #264653ff;
+$persian-green: #2a9d8fff;
+$orange-yellow-crayola: #e9c46aff;
+$sandy-brown: #f4a261ff;
+$burnt-sienna: #e76f51ff;
+$primary-text-color: #fafafa;
+
+// Breakpoints
+$breakpoints: (phone: 640px, 
+               tablet: 768px, 
+               desktop: 1024px) !default;
+
+$widthDektopMin: 1280px;
+$widthTabletMax: 1279px;
+$widthTabletMin: 600px;
+$widthMobileMax: 599px;
+
+// Mobile first !
+@media only screen and (min-width: $widthDektopMin) {
+  // flex-direction: row;
+}
+
+
+// Box shadows
+@mixin boxShadow1() {
+  -webkit-box-shadow: 3px 3px 8px 0px rgba(64,64,64,0.5);
+  -moz-box-shadow:    3px 3px 8px 0px rgba(64,64,64,0.5);
+  box-shadow:         3px 3px 8px 0px rgba(64,64,64,0.5);
+}
+
+@mixin boxShadow2() {
+  -webkit-box-shadow: 3px 3px 8px 0px rgba(64,64,64,0.75);
+  -moz-box-shadow:    3px 3px 8px 0px rgba(64,64,64,0.75);
+  box-shadow:         3px 3px 8px 0px rgba(64,64,64,0.75);
+}
+
+@mixin boxShadow3() {
+  -webkit-box-shadow: 3px 3px 8px 1px rgba(64,64,64,0.9);
+  -moz-box-shadow:    3px 3px 8px 1px rgba(64,64,64,0.9);
+  box-shadow:         3px 3px 8px 1px rgba(64,64,64,0.9);
+}
