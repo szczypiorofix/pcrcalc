@@ -7,7 +7,6 @@ import Field from "./Field";
 
 
 
-
 export default class App extends React.Component<{}, IStorageObject> {
 
   public localStorageCurrentDataName: Readonly<string> = "PCRCalcCurrentValues";
@@ -138,11 +137,10 @@ export default class App extends React.Component<{}, IStorageObject> {
 
   public calculateOutputs(event: React.ChangeEvent<HTMLInputElement>) {
     this.setState({...this.state,
-      reagents: {...this.state.reagents, [event.target.name]: parseFloat(event.target.value) || 0 } }, () => {
-      // console.log("State zmieniony");
-      this.saveCurrentToStorage();
-    });
-    // console.log("Koniec");
+      reagents: {...this.state.reagents, [event.target.name]: parseFloat(event.target.value) || 0 } },
+      () => {
+        this.saveCurrentToStorage();
+      });
   }
 
 
