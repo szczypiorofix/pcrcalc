@@ -21,7 +21,7 @@ html, body {
         display: none;
         position: fixed;
         z-index: 1;
-        padding-top: 100px;
+        padding-top: 68px;
         left: 0;
         top: 0;
         width: 100%;
@@ -131,18 +131,18 @@ html, body {
             }
             span.close {
               position: absolute;
-              right: 4px;
-              top: 4px;
+              right: 10px;
+              top: 0px;
               width: 22px;
-              color: $charcoal;
+              color: $burnt-sienna;
               font-size: 28px;
               font-weight: bold;
-              margin: 4px;
               transition: color 0.15s ease-in-out;
       
               &:hover, &:focus {
                 color: $sandy-brown;
                 text-decoration: none;
+                color: darken($burnt-sienna, 10%);
                 cursor: pointer;
               }
             }
@@ -426,7 +426,7 @@ html, body {
                 background-color: $sandy-brown;
               }
             }
-        }
+        } 
       }
     }
   }
