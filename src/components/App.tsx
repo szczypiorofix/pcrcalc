@@ -1,4 +1,4 @@
-import { faBars, faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSave, faTrashAlt, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from "react";
 import { IFieldsOfCalc, ISavedDataObject, ISettings, IStorageObject } from "../models";
@@ -189,11 +189,7 @@ export default class App extends React.Component<{}, IStorageObject> {
               <div className="modal-main">
                 <div className="modal-title">
                   <span className="title">Lista zapisanych reakcji:</span>
-                  <span className="close" onClick={
-                  (e) => {
-                    this.modalRef.current.style.display = "none";
-                  }
-                }>&times;</span>
+                  <span className="close" onClick={ () => this.modalRef.current.style.display = "none" }><FontAwesomeIcon icon={ faWindowClose }/></span>
                 </div>
                 <div>
                   <button className="add-btn" title="Zapisz reakcję" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -263,7 +259,6 @@ export default class App extends React.Component<{}, IStorageObject> {
                               <span className="item-id">{listItem.id}</span>:
                               <span className="item-name">{listItem.name}</span> 
                             </button>
-
                             <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
                         )
                       )
