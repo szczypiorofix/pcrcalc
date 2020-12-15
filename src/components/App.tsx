@@ -9,10 +9,12 @@ import Field from "./Field";
 
 export default class App extends React.Component<{}, IStorageObject> {
 
+  
   public localStorageCurrentDataName: Readonly<string> = "PCRCalcCurrentValues";
-  public localStorageSavedDataName: string = "PCRCalcSavedValues";
-  public localStorageSettingsName: string = "PCRCalcSettings";
-  public defaultSavedReactionName: string = "default_name";
+  public localStorageSavedDataName:   Readonly<string> = "PCRCalcSavedValues";
+  public localStorageSettingsName:    Readonly<string> = "PCRCalcSettings";
+  public defaultSavedReactionName:    Readonly<string> = "default_name";
+
 
   // default values
   public reagentsDefaultValues: Readonly<IFieldsOfCalc> = {
@@ -37,8 +39,13 @@ export default class App extends React.Component<{}, IStorageObject> {
     reagents: this.reagentsDefaultValues
   }
 
+  // Here are the saved reactions in localStorage
   private savedObjects: ISavedDataObject;
-  private modalRef: any;
+
+  // ref to modal
+  private modalRef: React.RefObject<HTMLDivElement>;
+  
+  // settings object, not in use right now
   private settings: ISettings;
 
 
@@ -187,7 +194,11 @@ export default class App extends React.Component<{}, IStorageObject> {
               <div className="modal-main">
                 <div className="modal-title">
                   <span className="title">Lista zapisanych reakcji:</span>
-                  <span className="close" onClick={ () => this.modalRef.current.style.display = "none" }><FontAwesomeIcon icon={ faWindowClose }/></span>
+                  <span className="close" onClick={ () => {
+                      if (this.modalRef && this.modalRef.current) {
+                        this.modalRef.current.style.display = "none";
+                      }
+                    } }><FontAwesomeIcon icon={ faWindowClose }/></span>
                 </div>
                 <div>
                   <button className="add-btn" title="Zapisz reakcję" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -223,17 +234,18 @@ export default class App extends React.Component<{}, IStorageObject> {
                               // remove 'b' from button name
                               const s: string = e.currentTarget.name.substring(1);
                               const i: number = parseInt(s, 10);
-                              console.log("Removing reaction id: " + i);
+                              // console.log("Removing reaction id: " + i);
                               const d = this.savedObjects.saved.filter(
                                 (obj: IStorageObject) => obj.id !== i
                               );
                               if (d) {
-                                console.log(d);
+                                // console.log(d);
                                 this.savedObjects.saved = d;
                                 localStorage.setItem(this.localStorageSavedDataName, JSON.stringify(this.savedObjects));
                                 this.forceUpdate();
                               } else {
                                 console.log("Coudn't find object with id = " + i);
+                                alert("Coudn't find object with id = " + i);
                               }
                             }}><FontAwesomeIcon icon={ faTrashAlt } /></button>
 
@@ -246,11 +258,14 @@ export default class App extends React.Component<{}, IStorageObject> {
                               );
                               if (d) {
                                 this.setState(d, ()=> {
-                                  this.modalRef.current.style.display = "none";
+                                  if (this.modalRef && this.modalRef.current) {
+                                    this.modalRef.current.style.display = "none";
+                                  }
+                                  
                                   console.log("Loaded reaction: " + d.name);
                                 });
                               } else {
-                                console.error("Ooops! Something went wrong, mister!")
+                                console.error("Ooops! Something went wrong, mister!");
                               }
                             }
                             }>
@@ -408,8 +423,10 @@ export default class App extends React.Component<{}, IStorageObject> {
               <div className="dna-result">-</div>
               <div className="action-button">
                 <div>
-                  <button className="btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {                    
-                    this.modalRef.current.style.display = "block";
+                  <button className="btn" onClick={ (e: React.MouseEvent<HTMLButtonElement>) => {
+                    if (this.modalRef && this.modalRef.current) {
+                      this.modalRef.current.style.display = "block";
+                    }
                   } }><FontAwesomeIcon icon={ faBars } /> Menu</button>
                 </div>
               </div>

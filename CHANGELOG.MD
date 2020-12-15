@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.01] - 2020-12-15
+### Added
+- Added some FontAwesome icons
+- PWA: now it's possible to install it on smartphone or computer as PWA
+
+### Changed
+- visual style of part of icons
+- modal window with saved reactions now should be rendered properly
+- fixed bug with loading saved reactions
+
 
 ## [0.5.05] - 2020-11-10
 ### Added
