@@ -234,17 +234,18 @@ export default class App extends React.Component<{}, IStorageObject> {
                               // remove 'b' from button name
                               const s: string = e.currentTarget.name.substring(1);
                               const i: number = parseInt(s, 10);
-                              console.log("Removing reaction id: " + i);
+                              // console.log("Removing reaction id: " + i);
                               const d = this.savedObjects.saved.filter(
                                 (obj: IStorageObject) => obj.id !== i
                               );
                               if (d) {
-                                console.log(d);
+                                // console.log(d);
                                 this.savedObjects.saved = d;
                                 localStorage.setItem(this.localStorageSavedDataName, JSON.stringify(this.savedObjects));
                                 this.forceUpdate();
                               } else {
                                 console.log("Coudn't find object with id = " + i);
+                                alert("Coudn't find object with id = " + i);
                               }
                             }}><FontAwesomeIcon icon={ faTrashAlt } /></button>
 
@@ -264,7 +265,7 @@ export default class App extends React.Component<{}, IStorageObject> {
                                   console.log("Loaded reaction: " + d.name);
                                 });
                               } else {
-                                console.error("Ooops! Something went wrong, mister!")
+                                console.error("Ooops! Something went wrong, mister!");
                               }
                             }
                             }>
