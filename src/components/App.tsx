@@ -261,15 +261,14 @@ export default class App extends React.Component<{}, IStorageObject> {
                                   if (this.modalRef && this.modalRef.current) {
                                     this.modalRef.current.style.display = "none";
                                   }
-                                  
-                                  console.log("Loaded reaction: " + d.name);
+                                  // console.log("Loaded reaction: " + d.name);
                                 });
                               } else {
                                 console.error("Ooops! Something went wrong, mister!");
                               }
                             }
                             }>
-                              <span className="item-id">{listItem.id}</span>:
+                              {/* <span className="item-id">{listItem.id}</span>: */}
                               <span className="item-name">{listItem.name}</span> 
                             </button>
                             <span className="item-date">{ this.timeConverter( listItem.date ) }</span></li>
