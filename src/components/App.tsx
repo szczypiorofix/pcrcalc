@@ -6,7 +6,6 @@ import "./App.scss";
 import Field from "./Field";
 
 
-
 export default class App extends React.Component<{}, IStorageObject> {
 
   
